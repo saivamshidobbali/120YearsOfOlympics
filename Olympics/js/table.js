@@ -17,7 +17,7 @@ this.gameScale = d3.scaleLinear()
 
 }
 
-createTable(){
+createTable(activeYear){
 let that = this;
 
 console.log(that.tableElements);
@@ -58,7 +58,7 @@ let td = tablerow.selectAll("td")
                    let a = d.values;
                    for (let ele in a){
                      console.log("ele",d.values[ele].key);
-                     if(d.values[ele].key=="1980"){
+                     if(d.values[ele].key==activeYear){
                        list.push(d.values[ele].value['Total Gold'])
                        list.push(d.values[ele].value['Total Bronze'])
                        list.push(d.values[ele].value['Total Silver'])
@@ -98,7 +98,6 @@ console.log(d);
                 return that.gameScale(d);
             })
             .attr("y", this.cell.height / 2 + 5)
-            .attr("class", "label")
             .text(function (d) {
                 return d;
             })

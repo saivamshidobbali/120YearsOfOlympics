@@ -39,7 +39,7 @@ class GapPlot {
      * @param updateYear a callback function used to notify other parts of the program when a year was updated
      * @param activeYear the year for which the data should be drawn initially
      */
-    constructor(medals_data, gdp_data, participants_data) {
+    constructor(medals_data, gdp_data, participants_data, updateYear) {
 
         // ******* TODO: PART 2 *******
 
@@ -52,6 +52,7 @@ class GapPlot {
         this.gdp_data = gdp_data;
         this.participants_data= participants_data;
         this.activeYear = 2000;
+        this.updateYear = updateYear;
 
         //YOUR CODE HERE 
         //this.drawDropDown("population", "gdp", "life-expectancy"); 
@@ -283,6 +284,7 @@ class GapPlot {
         if (!year_list.includes(parseInt(activeYear)))
                return
 
+        this.updateYear(activeYear);
         // ******* TODO: PART 2 *******
 
         /*

@@ -39,7 +39,7 @@ class GapPlot {
      * @param updateYear a callback function used to notify other parts of the program when a year was updated
      * @param activeYear the year for which the data should be drawn initially
      */
-    constructor(data, gdp_data, participants_data) {
+    constructor(medals_data, gdp_data, participants_data, updateYear) {
 
         // ******* TODO: PART 2 *******
 
@@ -48,10 +48,11 @@ class GapPlot {
         this.height = 500 - this.margin.top - this.margin.bottom;
         //this.activeYear = activeYear;
 
-        this.data = data;
+        this.medals_data = medals_data;
         this.gdp_data = gdp_data;
         this.participants_data= participants_data;
         this.activeYear = 2000;
+        this.updateYear = updateYear;
 
         //YOUR CODE HERE 
         //this.drawDropDown("population", "gdp", "life-expectancy"); 
@@ -219,7 +220,7 @@ class GapPlot {
             return 120000;
         }
         else if (indicator === "medals") {
-            return 2500;
+            return 400;
         }
         else {
             return 2000;
@@ -277,6 +278,13 @@ class GapPlot {
     updatePlot(activeYear, xIndicator, yIndicator, circleSizeIndicator) {
         console.log(xIndicator, yIndicator, circleSizeIndicator);
 
+
+        let year_list = [1980, 1984, 1988, 1992, 1996, 2000, 2004, 2008, 2012, 2016]
+
+        if (!year_list.includes(parseInt(activeYear)))
+               return
+
+        this.updateYear(activeYear);
         // ******* TODO: PART 2 *******
 
         /*
@@ -340,24 +348,27 @@ class GapPlot {
 
         let list_of_plot_data = [];
 
-        let medals = {};
+        let Data = {}
+        Data["medals"] = {}
+        Data["gdp"] = {}
+        Data["participants"] = {}
 
-        for (let i = 0; i < this.data.length ; i++)
-        {
-            if (this.data[i]["year"] === activeYear) {
-  
-                if (this.data[i].noc in medals) {
-                   medals[this.data[i].noc] += 1
-                } else {
-                   medals[this.data[i].noc] = 1
+        console.log(this.medals_data)
+
+        for (let i = 0; i < this.medals_data.length ; i++)
+        { 
+             for (let j = 0; j < this.medals_data[i].values.length; j++)
+             {
+                             //console.log(this.medals_data[i].values.length);
+                if (parseInt(this.medals_data[i].values[j].key) === parseInt(activeYear))
+                {
+                    console.log("dobbalivam")
+                    Data["medals"][this.medals_data[i].key] = this.medals_data[i].values[j].values.length;
                 }
-            }
-
-            if(this.data[i]["year"] == activeYear+1)
-                break;
+             }
+             
         }
 
-        let gdp = {};
         console.log(this.gdp_data);
         for (let i = 1; i < this.gdp_data.length; i++)
         {
@@ -366,34 +377,80 @@ class GapPlot {
                let field_string = "field_"+field_num;
                console.log(field_string);
                
-               gdp[this.gdp_data[i]["field_3"].toUpperCase()] = this.gdp_data[i][field_string]
+               Data["gdp"][this.gdp_data[i]["field_3"].toUpperCase()] = this.gdp_data[i][field_string]
 
         }
 
-        console.log(gdp);
-        console.log(medals);
-        
-        let participants_num = {"AUS": 0, "BAN": 0, "CAN": 0, "CHN": 0, "FRA": 0, "GBR": 0, "GER": 0, "HUN": 0, "IND": 0,
-                                 "ITA": 0, "JAM": 0, "JPN": 0, "PAK": 0, "POR": 0, "PRK": 0, "QAT": 0, "RUS": 0, "USA": 0 }
 
 
+        //Data["participants"] = {"AUS": 0, "BAN": 0, "CAN": 0, "CHN": 0, "FRA": 0, "GBR": 0, "GER": 0, "HUN": 0, "IND": 0,
+        //                         "ITA": 0, "JAM": 0, "JPN": 0, "PAK": 0, "POR": 0, "PRK": 0, "QAT": 0, "RUS": 0, "USA": 0 }
+
+
+        console.log(this.participants_data)
+        console.log(this.medals_data)
         for (let i = 0; i < this.participants_data.length; i++)
         {
-            if (this.participants_data[i]["year"] === activeYear)
-            {
-                participants_num[this.participants_data[i]["noc"].toUpperCase()] += 1; 
-            }
+        
+             for (let j = 0; j < this.participants_data[i].values.length; j++)
+             {
+                             //console.log(this.medals_data[i].values.length);
 
-            if(this.participants_data[i]["year"] > activeYear)
-                break;
+                if (parseInt(this.participants_data[i].values[j].key) === parseInt(activeYear))
+                {
+                    console.log("dobdsadbalivam")
+                    Data["participants"][this.participants_data[i].key] = this.participants_data[i].values[j].values.length;
+                }
+             }
+        }
+
+        console.log(Data)
+
+        /*
+        let Data = {}
+        Data["medals"] = {};
+
+        for (let i = 0; i < this.data[activeYear].length ; i++)
+        { 
+                if (this.data[activeYear][i].noc in Data["medals"]) {
+                   Data["medals"][this.data[activeYear][i].noc] += 1
+                } else {
+                   Data["medals"][this.data[activeYear][i].noc] = 1
+            }
+        }
+
+        Data["gdp"] = {};
+        console.log(this.gdp_data);
+        for (let i = 1; i < this.gdp_data.length; i++)
+        {
+ 
+               let field_num = activeYear -1975;
+               let field_string = "field_"+field_num;
+               console.log(field_string);
+               
+               Data["gdp"][this.gdp_data[i]["field_3"].toUpperCase()] = this.gdp_data[i][field_string]
+
+        }
+
+        console.log(Data["gdp"]);
+        console.log(Data["medals"]);
+        
+        Data["participants"] = {"AUS": 0, "BAN": 0, "CAN": 0, "CHN": 0, "FRA": 0, "GBR": 0, "GER": 0, "HUN": 0, "IND": 0,
+                                 "ITA": 0, "JAM": 0, "JPN": 0, "PAK": 0, "POR": 0, "PRK": 0, "QAT": 0, "RUS": 0, "USA": 0 }
+
+    
+
+        for (let i = 0; i < this.participants_data[activeYear].length; i++)
+        {
+        
+             Data["participants"][this.participants_data[activeYear][i]["noc"].toUpperCase()] += 1; 
         }
 
 
+*/
 
-
-        for (let country in medals)   {
-            //console.log(medals[country]);
-            list_of_plot_data.push(new PlotData(country, gdp[country], medals[country], participants_num[country]))
+        for (let country in Data["medals"])   {
+            list_of_plot_data.push(new PlotData(country,Data[xIndicator][country] , Data[yIndicator][country], Data[circleSizeIndicator][country]))
         }
 
         console.log(list_of_plot_data)
@@ -401,7 +458,7 @@ class GapPlot {
         let  maxSize = this.FindMax(circleSizeIndicator);
         let  minSize = 0;
 
-
+        
         /**
          *  Function to determine the circle radius by circle size
          *  This is the function to size your circles, you don't need to do anything to this
@@ -439,7 +496,7 @@ class GapPlot {
         const circles = svgGroup.selectAll('circle').data(list_of_plot_data).join('circle');
         
         circles.attr('cx', function(d) { 
-                                   console.log(d.xVal);
+                                   console.log(d);
                                    return circle_x_scale(d.xVal);
                                    })
                .attr('cy', d => circle_y_scale(d.yVal))
@@ -603,7 +660,7 @@ class GapPlot {
         let that = this;
 
         //Slider to change the activeYear of the data
-        let yearScale = d3.scaleLinear().domain([1800, 2020]).range([30, 730]);
+        let yearScale = d3.scaleLinear().domain([1980, 2016]).range([30, 730]);
         let yearSlider = d3.select('.slider');
 
         let tag = d3.select('.label')
@@ -631,7 +688,7 @@ class GapPlot {
                   .attr('font-weight', 'bold');
 
          
-        that.updateYear(year);
+        //that.updateYear(year);
         that.updatePlot(year, dropX.node().value , dropY.node().value, dropC.node().value);
 
         });

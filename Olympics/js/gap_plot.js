@@ -1,5 +1,6 @@
 class PlotData {
 
+
     constructor(country, xVal, yVal, num) {
         this.country = country;
         this.xVal = xVal;
@@ -114,10 +115,10 @@ class GapPlot {
                 .append('text');
 
 
+
         svgXAxis.attr("transform", "translate(50, 430)")
                 .call(x_axis)
                 .append('text');
-
 
         let dropdownWrap = d3.select('#chart-view').append('div').classed('dropdown-wrapper', true);
 
@@ -190,12 +191,14 @@ class GapPlot {
     }
 
     updatePlot(activeYear, xIndicator, yIndicator, circleSizeIndicator) {
+
         let year_list = [1980, 1984, 1988, 1992, 1996, 2000, 2004, 2008, 2012, 2016]
 
         if (!year_list.includes(parseInt(activeYear)))
                return
 
         this.updateYear(activeYear);
+
         
         let X_max = this.FindMax(xIndicator);
         let Y_max = this.FindMax(yIndicator);
@@ -231,29 +234,30 @@ class GapPlot {
         Data["gdp"] = {}
         Data["participants"] = {}
 
-
         for (let i = 0; i < this.medals_data.length ; i++)
         { 
              for (let j = 0; j < this.medals_data[i].values.length; j++)
              {
                 if (parseInt(this.medals_data[i].values[j].key) === parseInt(activeYear))
                 {
+
                     Data["medals"][this.medals_data[i].key] = this.medals_data[i].values[j].values.length;
                 }
              }
              
         }
 
+
         for (let i = 1; i < this.gdp_data.length; i++)
         {
  
                let field_num = activeYear -1975;
                let field_string = "field_"+field_num;
+
                
                Data["gdp"][this.gdp_data[i]["field_3"].toUpperCase()] = this.gdp_data[i][field_string]
 
         }
-
 
 
 
@@ -266,6 +270,7 @@ class GapPlot {
 
                 if (parseInt(this.participants_data[i].values[j].key) === parseInt(activeYear))
                 {
+
                     Data["participants"][this.participants_data[i].key] = this.participants_data[i].values[j].values.length;
                 }
              }
@@ -302,29 +307,29 @@ class GapPlot {
         const circles = svgGroup.selectAll('circle').data(list_of_plot_data).join('circle');
         
         circles.attr('cx', function(d) { 
+
                                    return circle_x_scale(d.xVal);
                                    })
                .attr('cy', d => circle_y_scale(d.yVal))
                .attr('r', d=> circleSizer(d))
                .attr("transform", "translate(50, 0 )")
+
                .attr("class",  d=> this.get_region(d.country))
+
                .on('mouseover', function(d){             
                      circles.html("<title>" + d.country + "</title>") 
                });
                
 
+
           //YOUR CODE HERE  
           this.drawDropDown(xIndicator, yIndicator, circleSizeIndicator);
           this.drawYearBar();
-
-    }
-
 
     tooltipRender(data) {
         let text = "<h2>" + data['country'] + "</h2>";
         return text;
     }
-
 
 
     drawDropDown(xIndicator, yIndicator, circleSizeIndicator) {
@@ -423,7 +428,6 @@ class GapPlot {
 
     drawYearBar() {
 
-
         let that = this;
 
         //Slider to change the activeYear of the data
@@ -441,7 +445,7 @@ class GapPlot {
         let dropX = dropDownWrapper.select('#dropdown_x').select('.dropdown-content').select('select');
         let dropC = dropDownWrapper.select('#dropdown_c').select('.dropdown-content').select('select');
         let dropY = dropDownWrapper.select('#dropdown_y').select('.dropdown-content').select('select');
-        
+ 
         let tag = d3.select('.activeYear-background');
         tag.text(year);
         //   .attr("class", "activeYear-background");
@@ -460,10 +464,8 @@ class GapPlot {
         });
     }
 
-
-  
     updateHighlightClick(activeCountry) {   
-       
+     
         let countryData = activeCountry;
         activeCountry = activeCountry.id;
 
@@ -486,6 +488,7 @@ class GapPlot {
                 .classed("selected-country",true);
 
         this.selectedCountry.push(activeCountry);
+
     }
 
 }

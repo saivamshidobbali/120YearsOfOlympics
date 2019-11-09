@@ -17,7 +17,7 @@ this.gameScale = d3.scaleLinear()
 this.ascending=true;
 }
 
-createTable(activeYear){
+createTable(activeYear="2016"){
 let that = this;
 
 console.log(that.tableElements);
@@ -59,7 +59,7 @@ let td = tablerow.selectAll("td")
                    let a = d.values;
                    for (let ele in a){
                      console.log("ele",d.values[ele].key);
-                     if(d.values[ele].key==activeYear){
+                     if(d.values[ele].key=="2016"){
                        list.push(d.values[ele].value['Total Gold'])
                        list.push(d.values[ele].value['Total Bronze'])
                        list.push(d.values[ele].value['Total Silver'])

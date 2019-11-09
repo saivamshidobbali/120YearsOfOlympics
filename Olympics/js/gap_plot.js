@@ -54,8 +54,8 @@ class GapPlot {
         this.activeYear = 2000;
         this.updateYear = updateYear;
 
-        //YOUR CODE HERE 
-        //this.drawDropDown("population", "gdp", "life-expectancy"); 
+        //YOUR CODE HERE
+        //this.drawDropDown("population", "gdp", "life-expectancy");
 
 
         // ******* TODO: PART 3 *******
@@ -65,7 +65,7 @@ class GapPlot {
          * assign the dragUpdate function as a variable that will be accessible to you in updatePlot()
          */
 
-        //YOUR CODE HERE  
+        //YOUR CODE HERE
         //this.rebuild_population();
         //this.updateYear = updateYear;
         //this.updateCountry = updateCountry;
@@ -130,7 +130,7 @@ class GapPlot {
                                .attr("id", "yaxis");
 
 
-        //YOUR CODE HERE  
+        //YOUR CODE HERE
         let x_axis_scale = d3.scaleLinear()
                              .domain([0, 9])
                              .range([0, 700]);
@@ -154,7 +154,7 @@ class GapPlot {
         svgXAxis.attr("transform", "translate(50, 430)")
                 .call(x_axis)
                 .append('text');
-        
+
         // ################################################################
         /* This is the setup for the dropdown menu- no need to change this */
 
@@ -209,7 +209,7 @@ class GapPlot {
             .append('svg');
 
         let sliderText = sliderLabel.append('text').text(this.activeYear);
-        
+
         this.updatePlot(2000, "gdp", "medals", "participants");
 
     }
@@ -242,7 +242,7 @@ class GapPlot {
                     continue;
                 }
                 let temp =  Object.values(this.data[indicator][i]);
-                temp.splice(221,4);             
+                temp.splice(221,4);
                 temp_min = d3.min(temp);
 
                 if(temp_min == 0)
@@ -260,7 +260,7 @@ class GapPlot {
     {
         if (this.data[indicator][countryId] != null)
         {
-            return this.data[indicator][countryId][currentYear];  
+            return this.data[indicator][countryId][currentYear];
         }
         else {
             return 0;
@@ -276,7 +276,7 @@ class GapPlot {
      * @param circleSizeIndicator identifies the values to use for the circle size
      */
     updatePlot(activeYear, xIndicator, yIndicator, circleSizeIndicator) {
-        console.log(xIndicator, yIndicator, circleSizeIndicator);
+      //  console.log(xIndicator, yIndicator, circleSizeIndicator);
 
 
         let year_list = [1980, 1984, 1988, 1992, 1996, 2000, 2004, 2008, 2012, 2016]
@@ -313,12 +313,12 @@ class GapPlot {
         *** call the drawLegend() and drawDropDown()
         These will draw the legend and the drop down menus in your data
         Pay attention to the parameters needed in each of the functions
-            
+
         */
 
-        console.log("dobbali");
+      //  console.log("dobbali");
         // Scales
-        
+
         let X_max = this.FindMax(xIndicator);
         let Y_max = this.FindMax(yIndicator);
         let Circle_max = this.FindMax(circleSizeIndicator);
@@ -353,30 +353,30 @@ class GapPlot {
         Data["gdp"] = {}
         Data["participants"] = {}
 
-        console.log(this.medals_data)
+      //  console.log(this.medals_data)
 
         for (let i = 0; i < this.medals_data.length ; i++)
-        { 
+        {
              for (let j = 0; j < this.medals_data[i].values.length; j++)
              {
                              //console.log(this.medals_data[i].values.length);
                 if (parseInt(this.medals_data[i].values[j].key) === parseInt(activeYear))
                 {
-                    console.log("dobbalivam")
+                    //console.log("dobbalivam")
                     Data["medals"][this.medals_data[i].key] = this.medals_data[i].values[j].values.length;
                 }
              }
-             
+
         }
 
-        console.log(this.gdp_data);
+      //  console.log(this.gdp_data);
         for (let i = 1; i < this.gdp_data.length; i++)
         {
- 
+
                let field_num = activeYear -1975;
                let field_string = "field_"+field_num;
-               console.log(field_string);
-               
+              // console.log(field_string);
+
                Data["gdp"][this.gdp_data[i]["field_3"].toUpperCase()] = this.gdp_data[i][field_string]
 
         }
@@ -387,31 +387,31 @@ class GapPlot {
         //                         "ITA": 0, "JAM": 0, "JPN": 0, "PAK": 0, "POR": 0, "PRK": 0, "QAT": 0, "RUS": 0, "USA": 0 }
 
 
-        console.log(this.participants_data)
-        console.log(this.medals_data)
+      //  console.log(this.participants_data)
+      //  console.log(this.medals_data)
         for (let i = 0; i < this.participants_data.length; i++)
         {
-        
+
              for (let j = 0; j < this.participants_data[i].values.length; j++)
              {
                              //console.log(this.medals_data[i].values.length);
 
                 if (parseInt(this.participants_data[i].values[j].key) === parseInt(activeYear))
                 {
-                    console.log("dobdsadbalivam")
+                    //console.log("dobdsadbalivam")
                     Data["participants"][this.participants_data[i].key] = this.participants_data[i].values[j].values.length;
                 }
              }
         }
 
-        console.log(Data)
+      //  console.log(Data)
 
         /*
         let Data = {}
         Data["medals"] = {};
 
         for (let i = 0; i < this.data[activeYear].length ; i++)
-        { 
+        {
                 if (this.data[activeYear][i].noc in Data["medals"]) {
                    Data["medals"][this.data[activeYear][i].noc] += 1
                 } else {
@@ -423,27 +423,27 @@ class GapPlot {
         console.log(this.gdp_data);
         for (let i = 1; i < this.gdp_data.length; i++)
         {
- 
+
                let field_num = activeYear -1975;
                let field_string = "field_"+field_num;
                console.log(field_string);
-               
+
                Data["gdp"][this.gdp_data[i]["field_3"].toUpperCase()] = this.gdp_data[i][field_string]
 
         }
 
         console.log(Data["gdp"]);
         console.log(Data["medals"]);
-        
+
         Data["participants"] = {"AUS": 0, "BAN": 0, "CAN": 0, "CHN": 0, "FRA": 0, "GBR": 0, "GER": 0, "HUN": 0, "IND": 0,
                                  "ITA": 0, "JAM": 0, "JPN": 0, "PAK": 0, "POR": 0, "PRK": 0, "QAT": 0, "RUS": 0, "USA": 0 }
 
-    
+
 
         for (let i = 0; i < this.participants_data[activeYear].length; i++)
         {
-        
-             Data["participants"][this.participants_data[activeYear][i]["noc"].toUpperCase()] += 1; 
+
+             Data["participants"][this.participants_data[activeYear][i]["noc"].toUpperCase()] += 1;
         }
 
 
@@ -453,17 +453,17 @@ class GapPlot {
             list_of_plot_data.push(new PlotData(country,Data[xIndicator][country] , Data[yIndicator][country], Data[circleSizeIndicator][country]))
         }
 
-        console.log(list_of_plot_data)
+      //  console.log(list_of_plot_data)
 
         let  maxSize = this.FindMax(circleSizeIndicator);
         let  minSize = 0;
 
-        
+
         /**
          *  Function to determine the circle radius by circle size
          *  This is the function to size your circles, you don't need to do anything to this
          *  but you will call it and pass the circle data as the parameter.
-         * 
+         *
          * @param d the data value to encode
          * @returns {number} the radius
          */
@@ -480,8 +480,8 @@ class GapPlot {
         //{
         //      list_of_plot_data[i].circleSize = circleSizer(list_of_plot_data[i]);
         //}
-   
-        console.log(X_max, Y_max)
+
+      //  console.log(X_max, Y_max)
 
         let circle_x_scale = d3.scaleLinear()
                              .domain([0, X_max])
@@ -494,8 +494,8 @@ class GapPlot {
         svgGroup = d3.select('#chart-view').select('.plot-svg').selectAll('.wrapper-group');
 
         const circles = svgGroup.selectAll('circle').data(list_of_plot_data).join('circle');
-        
-        circles.attr('cx', function(d) { 
+
+        circles.attr('cx', function(d) {
                                    console.log(d);
                                    return circle_x_scale(d.xVal);
                                    })
@@ -503,26 +503,26 @@ class GapPlot {
                .attr('r', d=> circleSizer(d))
                .attr("transform", "translate(50, 0 )")
                .attr("class",  d=> d.country)
-               .on('mouseover', function(d){             
-                     circles.html("<title>" + d.country + "</title>") 
+               .on('mouseover', function(d){
+                     circles.html("<title>" + d.country + "</title>")
                });
-               
+
 /*
 
                .attr("class",  d=> d.region)
                .attr("id", d=> d.id)
                .on('click', this.updateCountry)
-               .on('mouseover', function(d){             
-                     circles.html("<title>" + d.country + "</title>") 
+               .on('mouseover', function(d){
+                     circles.html("<title>" + d.country + "</title>")
                });
 */
 
         ///////////////////////////////////////////////////////////////////
 //        xIndicator = xIndicator === 'new_population' ? 'population' : xIndicator;
 //        yIndicator = yIndicator === 'new_population' ? 'population' : yIndicator;
-//        circleSizeIndicator = circleSizeIndicator === 'new_population' ? 'population' : circleSizeIndicator;         
+//        circleSizeIndicator = circleSizeIndicator === 'new_population' ? 'population' : circleSizeIndicator;
 
-          //YOUR CODE HERE  
+          //YOUR CODE HERE
           this.drawDropDown(xIndicator, yIndicator, circleSizeIndicator);
           this.drawYearBar();
 
@@ -534,7 +534,7 @@ class GapPlot {
 
     /**
      * Returns html that can be used to render the tooltip.
-     * @param data 
+     * @param data
      * @returns {string}
      */
     tooltipRender(data) {
@@ -667,14 +667,14 @@ class GapPlot {
                     .attr("class", "activeYear-background");
 
         yearSlider.on('input', function() {
-        
-        //YOUR CODE HERE  
+
+        //YOUR CODE HERE
         let year = yearSlider.node().value;
         let dropDownWrapper = d3.select('.dropdown-wrapper');
         let dropX = dropDownWrapper.select('#dropdown_x').select('.dropdown-content').select('select');
         let dropC = dropDownWrapper.select('#dropdown_c').select('.dropdown-content').select('select');
         let dropY = dropDownWrapper.select('#dropdown_y').select('.dropdown-content').select('select');
-        
+
         //let svgGroup = d3.select('#chart-view').select('.plot-svg').('g').classed('wrapper-group', true);
         let tag = d3.select('.activeYear-background');
         tag.text(year);
@@ -687,7 +687,7 @@ class GapPlot {
                   .attr('font-size', "large")
                   .attr('font-weight', 'bold');
 
-         
+
         //that.updateYear(year);
         that.updatePlot(year, dropX.node().value , dropY.node().value, dropC.node().value);
 
@@ -734,7 +734,7 @@ class GapPlot {
      * and fades countries on other continents out
      * @param activeCountry
      */
-    updateHighlightClick(activeCountry) {   
+    updateHighlightClick(activeCountry) {
         /* ******* TODO: PART 3*******
         //You need to assign selected class to the target country and corresponding region
         // Hint: If you followed our suggestion of using classes to style
@@ -743,7 +743,7 @@ class GapPlot {
         // You will not be calling this directly in the gapPlot class,
         // you will need to call it from the updateHighlight function in script.js
         */
-        //YOUR CODE HERE  
+        //YOUR CODE HERE
 
         let countryData = activeCountry;
         activeCountry = activeCountry.id;
@@ -752,7 +752,7 @@ class GapPlot {
         let svgGroup = d3.select('#chart-view')
                          .select('.plot-svg')
                          .selectAll('.wrapper-group');
-      
+
         // Graying out other stuff
         const circles = svgGroup.selectAll('circle');
         circles.classed('hidden', true);
@@ -761,7 +761,7 @@ class GapPlot {
         // highlight
         activeCountry = activeCountry.toLowerCase();
         activeCountry = "#"+activeCountry;
-        
+
         svgGroup.select(activeCountry)
                 .classed("hidden", false)
                 .classed("selected-country",true);
@@ -783,8 +783,8 @@ class GapPlot {
         // the colors and markers for hosts/teams/winners, you can use
         // d3 selection and .classed to set these classes off here.
 
-        //YOUR CODE HERE 
-        //let svg = d3.select(activeCountry); 
+        //YOUR CODE HERE
+        //let svg = d3.select(activeCountry);
         let svgGroup = d3.select('#chart-view')
                          .select('.plot-svg')
                          .selectAll('.wrapper-group');
@@ -796,7 +796,7 @@ class GapPlot {
                     .classed("selected-country",false);
         }
 
-        // clear graying 
+        // clear graying
         const circles = svgGroup.selectAll('circle');
         circles.classed('hidden', false);
 

@@ -325,6 +325,7 @@ class GapPlot {
           //YOUR CODE HERE  
           this.drawDropDown(xIndicator, yIndicator, circleSizeIndicator);
           this.drawYearBar();
+}
 
     tooltipRender(data) {
         let text = "<h2>" + data['country'] + "</h2>";
@@ -342,7 +343,7 @@ class GapPlot {
 
 
         /* CIRCLE DROPDOWN */
-        let dropC = dropDownWrapper.select('#dropdown_c').select('.dropdown-content').select('select');
+        let dropC = dropDownWrapper.select('#dropdown_c').select('.dropdown-content').attr("style", "width:200px").select('select');
 
         let optionsC = dropC.selectAll('option')
             .data(dropData);
@@ -370,7 +371,7 @@ class GapPlot {
         });
 
         /* X DROPDOWN */
-        let dropX = dropDownWrapper.select('#dropdown_x').select('.dropdown-content').select('select');
+        let dropX = dropDownWrapper.select('#dropdown_x').select('.dropdown-content').attr("style", "width:200px").select('select');
 
         let optionsX = dropX.selectAll('option')
             .data(dropData);
@@ -397,7 +398,7 @@ class GapPlot {
         });
 
         /* Y DROPDOWN */
-        let dropY = dropDownWrapper.select('#dropdown_y').select('.dropdown-content').select('select');
+        let dropY = dropDownWrapper.select('#dropdown_y').select('.dropdown-content').attr("style", "width:200px").select('select');
 
         let optionsY = dropY.selectAll('option')
             .data(dropData);

@@ -393,3 +393,12 @@ div.tooltip {
     font-size: 80px;
     opacity: .4;
 }
+
+#matchTable thead{
+  padding: 12px;
+ text-align: center;
+ background-color: #add8e6;
+ color: black;
+height: 55px;
+font-weight: bold;
+}

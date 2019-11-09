@@ -15,7 +15,7 @@ this.active_year = "1980";
                .key(d=> d.NOC)
                .key(d=>d.Year)
                .rollup()
-               .entries(participantsCSV)  
+               .entries(participantsCSV)
 
 
    const gap_plot = new GapPlot(MedalsData, gdp_data, participantsInfo, updateyear);
@@ -109,10 +109,12 @@ len= leaves.length;
 function updateyear(active_year) {
 
        this.active_year = active_year;
+       table.beforeTable(this.active_year);
+
        table.createTable(this.active_year);
+       //table.updateTable(this.active_year);
 }
 
 });
 
 });
-

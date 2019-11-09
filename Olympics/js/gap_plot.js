@@ -25,7 +25,6 @@ class GapPlot {
         this.activeYear = 2000;
         this.updateYear = updateYear;
     }
-
     rebuild_population() {
 
 
@@ -59,7 +58,7 @@ class GapPlot {
 
 
     return dict[countryId]
-    
+
     }
 
     drawPlot() {
@@ -171,7 +170,7 @@ class GapPlot {
             .append('svg');
 
         let sliderText = sliderLabel.append('text').text(this.activeYear);
-        
+
         this.updatePlot(2000, "gdp", "medals", "participants");
 
     }
@@ -189,7 +188,6 @@ class GapPlot {
         }
 
     }
-
     updatePlot(activeYear, xIndicator, yIndicator, circleSizeIndicator) {
 
         let year_list = [1980, 1984, 1988, 1992, 1996, 2000, 2004, 2008, 2012, 2016]
@@ -198,8 +196,6 @@ class GapPlot {
                return
 
         this.updateYear(activeYear);
-
-        
         let X_max = this.FindMax(xIndicator);
         let Y_max = this.FindMax(yIndicator);
         let Circle_max = this.FindMax(circleSizeIndicator);
@@ -235,26 +231,22 @@ class GapPlot {
         Data["participants"] = {}
 
         for (let i = 0; i < this.medals_data.length ; i++)
-        { 
+        {
              for (let j = 0; j < this.medals_data[i].values.length; j++)
              {
                 if (parseInt(this.medals_data[i].values[j].key) === parseInt(activeYear))
                 {
-
                     Data["medals"][this.medals_data[i].key] = this.medals_data[i].values[j].values.length;
                 }
              }
-             
-        }
 
+        }
 
         for (let i = 1; i < this.gdp_data.length; i++)
         {
- 
+
                let field_num = activeYear -1975;
                let field_string = "field_"+field_num;
-
-               
                Data["gdp"][this.gdp_data[i]["field_3"].toUpperCase()] = this.gdp_data[i][field_string]
 
         }
@@ -263,14 +255,13 @@ class GapPlot {
 
         for (let i = 0; i < this.participants_data.length; i++)
         {
-        
+
              for (let j = 0; j < this.participants_data[i].values.length; j++)
              {
                              //console.log(this.medals_data[i].values.length);
 
                 if (parseInt(this.participants_data[i].values[j].key) === parseInt(activeYear))
                 {
-
                     Data["participants"][this.participants_data[i].key] = this.participants_data[i].values[j].values.length;
                 }
              }
@@ -305,8 +296,8 @@ class GapPlot {
         svgGroup = d3.select('#chart-view').select('.plot-svg').selectAll('.wrapper-group');
 
         const circles = svgGroup.selectAll('circle').data(list_of_plot_data).join('circle');
-        
-        circles.attr('cx', function(d) { 
+
+        circles.attr('cx', function(d) {
 
                                    return circle_x_scale(d.xVal);
                                    })
@@ -316,13 +307,12 @@ class GapPlot {
 
                .attr("class",  d=> this.get_region(d.country))
 
-               .on('mouseover', function(d){             
-                     circles.html("<title>" + d.country + "</title>") 
+               .on('mouseover', function(d){
+                     circles.html("<title>" + d.country + "</title>")
                });
-               
 
 
-          //YOUR CODE HERE  
+          //YOUR CODE HERE
           this.drawDropDown(xIndicator, yIndicator, circleSizeIndicator);
           this.drawYearBar();
 }
@@ -439,14 +429,14 @@ class GapPlot {
                     .attr("class", "activeYear-background");
 
         yearSlider.on('input', function() {
-        
-        //YOUR CODE HERE  
+
+        //YOUR CODE HERE
         let year = yearSlider.node().value;
         let dropDownWrapper = d3.select('.dropdown-wrapper');
         let dropX = dropDownWrapper.select('#dropdown_x').select('.dropdown-content').select('select');
         let dropC = dropDownWrapper.select('#dropdown_c').select('.dropdown-content').select('select');
         let dropY = dropDownWrapper.select('#dropdown_y').select('.dropdown-content').select('select');
- 
+
         let tag = d3.select('.activeYear-background');
         tag.text(year);
         //   .attr("class", "activeYear-background");
@@ -458,15 +448,15 @@ class GapPlot {
                   .attr('font-size', "large")
                   .attr('font-weight', 'bold');
 
-         
+
         //that.updateYear(year);
         that.updatePlot(year, dropX.node().value , dropY.node().value, dropC.node().value);
 
         });
     }
 
-    updateHighlightClick(activeCountry) {   
-     
+    updateHighlightClick(activeCountry) {
+
         let countryData = activeCountry;
         activeCountry = activeCountry.id;
 
@@ -474,7 +464,7 @@ class GapPlot {
         let svgGroup = d3.select('#chart-view')
                          .select('.plot-svg')
                          .selectAll('.wrapper-group');
-      
+
         // Graying out other stuff
         const circles = svgGroup.selectAll('circle');
         circles.classed('hidden', true);
@@ -483,7 +473,7 @@ class GapPlot {
         // highlight
         activeCountry = activeCountry.toLowerCase();
         activeCountry = "#"+activeCountry;
-        
+
         svgGroup.select(activeCountry)
                 .classed("hidden", false)
                 .classed("selected-country",true);

@@ -12,7 +12,7 @@ this.bar = {
     "height": 20
 };
 this.gameScale = d3.scaleLinear()
-    .range([10,this.cell.width]);
+    .range([0,this.cell.width]);
 
 
 }
@@ -95,7 +95,7 @@ console.log(d);
                 return [d];
             }).join('text')
             .attr("x", function (d) {
-                return that.gameScale(d) - 10;
+                return that.gameScale(d);
             })
             .attr("y", this.cell.height / 2 + 5)
             .attr("class", "label")

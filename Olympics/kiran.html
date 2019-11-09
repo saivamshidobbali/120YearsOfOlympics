@@ -10,8 +10,10 @@
     <script src="https://d3js.org/d3.v5.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.19/topojson.js"></script>
     <script src="https://d3js.org/d3-geo-projection.v2.js"></script>
+    <script src="js/table2.js" async></script>
     <script src="js/gap_plot.js" async></script>
     <script src="js/script.js" async></script>
+
 </head>
 
 <body>
@@ -20,13 +22,26 @@
         <p class="info">Name: Saivamshi Dobbali; E-Mail: u1266122@utah.edu; UID: u1266122</p>
     </div>
     <div class="wrapper">
-        <div id="scatter-plot" class="view">
+      <div id="scatter-plot" class="view">
 
-        </div>
-
+      </div>
         <div class="innerWrapper">
-        </div>
+          <table id="matchTable">
+              <thead>
+              <tr>
+                  <th>Team</th>
+                  <td> Gold </td>
+                  <td>Silver</td>
+                  <td>Bronze</td>
+                  <td>Total</td>
+              </tr>
 
+              </thead>
+              <tbody>
+
+              </tbody>
+          </table>
+        </div>
 
     </div>
 </body>

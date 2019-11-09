@@ -367,66 +367,27 @@ div.tooltip {
 
 
 /* Styling for Counties */
+.asia {
+    fill: #AD1457;
+}
 
-.AUS {
+
+.australia {
+
     fill: #FFCA28;
     /*  stroke-width: 1px;*/
 }
 
-path.AUS.selected-country,
-circle.AUS.selected-country {
-    fill: #cc9a04;
-    /* stroke: #000000;*/
-}
 
-i.AUS {
-    color: #FFCA28;
-}
-
-.BAN {
+.europe {
     fill: #85C1E9;
 }
 
-path.BAN.selected-country,
-circle.BAN.selected-country {
-    fill: #2d7aad;
-    /*  stroke-width: 1px;*/
-    /* stroke: #000000;*/
-}
 
-i.BAN {
-    color: #2d7aad;
-}
-
-.CAN {
+.northamerica {
     fill: #D4E157;
 }
 
-path.CAN.selected-country,
-circle.CAN.selected-country {
-    fill: #aaba18;
-    /*  stroke-width: 1px;*/
-    /* stroke: #000000;*/
-}
-
-i.CAN {
-    color: #D4E157;
-}
-
-.CHN {
-    fill: #AD1457;
-}
-
-path.CHN.selected-country,
-circle.CHN.selected-country {
-    fill: #7c0238;
-    /*  stroke-width: 1px;*/
-    /* stroke: #000000;*/
-}
-
-i.CHN {
-    color: #AD1457;
-}
 
 .activeYear-background {
     font-size: 80px;

@@ -9,7 +9,7 @@ this.active_year = "1980";
                   .entries(matchesCSV)
 
  d3.csv('data/athlete_events_modified.csv').then(participantsCSV=>{
-  console.log(participantsCSV)
+
 
   let participantsInfo = d3.nest()
                .key(d=> d.NOC)
@@ -17,8 +17,6 @@ this.active_year = "1980";
                .rollup()
                .entries(participantsCSV)
 
-  //console.log(MedalsData)
-  console.log(participantsInfo)
 
    const gap_plot = new GapPlot(MedalsData, gdp_data, participantsInfo, updateyear);
    gap_plot.drawPlot();
@@ -50,7 +48,6 @@ len= leaves.length;
          }
          function h(i){
 
-                 console.log(leaves[i]['Team']);
                  if(leaves[i]['Medal']=="Gold"){
                    total_gold+=1;
                  }
@@ -64,7 +61,7 @@ len= leaves.length;
          if(sports.includes(leaves[i]['Sport'])==false)
          {
            sports.push(leaves[i]['Sport'])
-           console.log(sports);
+
            game.key = leaves[i]["Sport"];
            if(leaves[i]['Medal']=="Gold"){
              t_gold+=1;
@@ -86,8 +83,8 @@ len= leaves.length;
          }
 
 
+      }
 
-           }
 
 
        let obj = {
@@ -110,18 +107,14 @@ len= leaves.length;
     table.createTable(this.active_year);
 
 function updateyear(active_year) {
-       console.log("*************",active_year)
+
        this.active_year = active_year;
        table.beforeTable(this.active_year);
 
        table.createTable(this.active_year);
+       //table.updateTable(this.active_year);
 }
 
 });
-
-
-
-
-
 
 });

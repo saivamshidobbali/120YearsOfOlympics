@@ -1,52 +1,29 @@
+d3.json('data/gdp.json').then( gdp_data=> {
 
+ d3.csv('data/truncated_latest.csv').then(matchesCSV=>{
+  let MedalsData = d3.nest()
+                  .key(d=> d.NOC)
+                  .key(d=>d.Year)
+                  .entries(matchesCSV)
 
-d3.json('data/Olympic_data.json').then( data => {
-    console.log("vamshi");
-    console.log(data);
+ d3.csv('data/athlete_events_modified.csv').then(participantsCSV=>{
+  console.log(participantsCSV)
 
-    d3.json('data/gdp.json').then(gdp_data=> {
-        console.log(gdp_data); 
+  let participantsInfo = d3.nest()
+               .key(d=> d.NOC)
+               .key(d=>d.Year)
+               .rollup()
+               .entries(participantsCSV)  
 
-        d3.json('data/participants.json').then(participants_data=> {
+  //console.log(MedalsData)
+  console.log(participantsInfo)
 
-    
-         //for (let i=0; i<data.length; i++)
-         //{
-          // for (let j = 1; j<gdp_data.length; j++) {
-            // console.log(gdp_data[j]["field_3"].toUpperCase(), data[i].noc);
-             
-            // if (gdp_data[j]["field_3"].toUpperCase() ==  data[i].noc)
-            //{
-            //    let diff = data[i]["year"] - 1975;
-            //    let field = "field_"+diff
-
-                //data[i]["gdp"] = gdb_data[j][]
-             //   console.log(data[i]["year"], field)
-            // }
-  
-            // }
-        //}
-
-        const gap_plot = new GapPlot(data, gdp_data, participants_data);
-        gap_plot.drawPlot();
+   const gap_plot = new GapPlot(MedalsData, gdp_data, participantsInfo);
+  gap_plot.drawPlot();
+ })
 
 
 
-    });
- 
-    });
+});
 
-
-    //let medals = {};
-
-    // for (let i = 0; i < data.length ; i++)
-    // {
-    //      if (data[i].noc in medals) {
-    //           medals[data[i].noc] += 1
-    //      } else {
-    //           medals[data[i].noc] = 1
-    //      }
-    //}
-
-    // console.log(medals)
 });

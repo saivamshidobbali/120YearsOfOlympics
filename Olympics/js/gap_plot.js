@@ -13,7 +13,7 @@ class PlotData {
 
 class GapPlot {
 
-    constructor(medals_data, gdp_data, participants_data, updateYear) {
+    constructor(medals_data, gdp_data, participants_data, updateYear, Table) {
 
         this.margin = { top: 20, right: 20, bottom: 60, left: 80 };
         this.width = 810 - this.margin.left - this.margin.right;
@@ -24,10 +24,17 @@ class GapPlot {
         this.participants_data= participants_data;
         this.activeYear = 2000;
         this.updateYear = updateYear;
+        this.Table = Table;
+        
     }
-    rebuild_population() {
 
-
+    sleep(milliseconds) {
+      const date = Date.now();
+      let currentDate = null;
+    
+      do {
+           currentDate = Date.now();
+         } while (currentDate - date < milliseconds);
     }
 
     get_region(countryId)
@@ -63,7 +70,6 @@ class GapPlot {
 
     drawPlot() {
 
-
         d3.select('#scatter-plot')
             .append('div').attr('id', 'chart-view');
 
@@ -94,7 +100,6 @@ class GapPlot {
         let svgYAxis = svgGroup.append('g')
                                .attr("id", "yaxis");
 
-
         let x_axis_scale = d3.scaleLinear()
                              .domain([0, 9])
                              .range([0, 700]);
@@ -112,8 +117,6 @@ class GapPlot {
         svgYAxis.attr("transform", "translate(50, 10)")
                 .call(y_axis)
                 .append('text');
-
-
 
         svgXAxis.attr("transform", "translate(50, 430)")
                 .call(x_axis)
@@ -148,8 +151,6 @@ class GapPlot {
         yWrap.append('div').attr('id', 'dropdown_y').classed('dropdown', true).append('div').classed('dropdown-content', true)
             .append('select');
 
-
-
         d3.select('#chart-view')
             .append('div')
             .classed('circle-legend', true)
@@ -157,12 +158,54 @@ class GapPlot {
             .append('g')
             .attr('transform', 'translate(10, 0)');
 
+        let icon = d3.select('#activeYear-bar')
+                     .append('button')
+                     .attr('type', "button")
+                     .attr('class', 'button');    
+
+        let that = this;
+
+        icon.on('click', function(d) {
+          /*
+           d3.select(".slider")
+             .transition()
+             .duration(7000)
+             .tween("value", function() {
+             let i = d3.interpolate(this.min, this.max);
+             return function(t) { this.value = i(t);
+                                  that.drawYearBar(); };
+           });*/
+
+            let yearSlider = d3.select('.slider');
+            let year_list = [1984, 1988, 1992, 1996, 2000, 2004, 2008, 2012, 2016]
+
+
+            let event = new Event('input', {
+                bubbles: true,
+                cancelable: true,
+            });
+
+            yearSlider.node().value = 1980;
+            yearSlider.node().dispatchEvent(event)
+
+
+         let i = 1000;
+         for (let elem in year_list) {
+            
+            window.setTimeout(()=> { yearSlider.node().value = year_list[elem];
+                                     yearSlider.node().dispatchEvent(event);}, i );
+            i = i+2000;
+          }
+ 
+        });
+
         let yearSlider = d3.select('#activeYear-bar')
             .append('div').classed('slider-wrap', true)
             .append('input').classed('slider', true)
             .attr('type', 'range')
             .attr('min', 1980)
             .attr('max', 2016)
+            .attr('step', 4)
             .attr('value', this.activeYear);
 
         let sliderLabel = d3.select('.slider-wrap')
@@ -170,7 +213,6 @@ class GapPlot {
             .append('svg');
 
         let sliderText = sliderLabel.append('text').text(this.activeYear);
-
         this.updatePlot(1980, "gdp", "medals", "participants");
 
     }
@@ -190,6 +232,7 @@ class GapPlot {
     }
     updatePlot(activeYear, xIndicator, yIndicator, circleSizeIndicator) {
 
+        console.log("updatyeeee");
         let year_list = [1980, 1984, 1988, 1992, 1996, 2000, 2004, 2008, 2012, 2016]
 
         if (!year_list.includes(parseInt(activeYear)))
@@ -297,19 +340,26 @@ class GapPlot {
 
         const circles = svgGroup.selectAll('circle').data(list_of_plot_data).join('circle');
 
+        let that = this;
         circles.attr('cx', function(d) {
-
                                    return circle_x_scale(d.xVal);
                                    })
                .attr('cy', d => circle_y_scale(d.yVal))
                .attr('r', d=> circleSizer(d))
                .attr("transform", "translate(50, 0 )")
-
                .attr("class",  d=> this.get_region(d.country))
 
                .on('mouseover', function(d){
-                     circles.html("<title>" + d.country + "</title>")
-               });
+                    circles.html("<title>" + d.country + "</title>")
+                    circles.style('opacity', '0.5')
+                    d3.select(this).style('opacity', '1' );
+                    that.Table.selectedCountryTable(d.country);
+               })
+               .on('mouseout', function(d) {
+                    circles.style('opacity', '1')                    
+                    that.Table.selectedCountryTable(null);
+
+               })
 
 
           //YOUR CODE HERE
@@ -416,8 +466,8 @@ class GapPlot {
 
     }
 
-
     drawYearBar() {
+        console.log("this asdadadas")
 
         let that = this;
 
@@ -432,6 +482,7 @@ class GapPlot {
 
         //YOUR CODE HERE
         let year = yearSlider.node().value;
+        
         let dropDownWrapper = d3.select('.dropdown-wrapper');
         let dropX = dropDownWrapper.select('#dropdown_x').select('.dropdown-content').select('select');
         let dropC = dropDownWrapper.select('#dropdown_c').select('.dropdown-content').select('select');

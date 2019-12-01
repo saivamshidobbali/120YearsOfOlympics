@@ -3,14 +3,12 @@ d3.json('data/gdp.json').then( gdp_data=> {
 
 // Add active class to the current button (highlight it)
 var header = document.getElementById("topnavbar");
-console.log(header);
 var btns = header.getElementsByClassName("btn");
-console.log(btns);
 for (var i = 0; i < btns.length; i++) {
-  btns[i].addEventListener("click", function() {
-  var current = document.getElementsByClassName("active");
-  current[0].className = current[0].className.replace(" active", "");
-  this.className += " active";
+   btns[i].addEventListener("click", function() {
+   var current = document.getElementsByClassName("active");
+   current[0].className = current[0].className.replace(" active", "");
+   this.className += " active";
   });
 }
 
@@ -23,6 +21,27 @@ for (var i = 0; i < btns.length; i++) {
                   .rollup()
                   .entries(matchesCSV)
 
+  let gender = {};
+  gender["M"] = 0;
+  gender["F"] = 0;
+
+  let genderData = d3.nest()
+                  .key(d=>d.Year)
+                  .rollup(leaves => {
+                      len= leaves.length;
+
+                      for(var i=0;i<len;i++){
+                        g(i);
+                      }
+                     
+                      g()
+
+                      gender[leaves[0]['Sex']] +=1; 
+
+                  })
+                  .entries(matchesCSV)
+
+console.log(gender) 
 
 
 // ###################################################################################
@@ -61,8 +80,7 @@ for (var i = 0; i < btns.length; i++) {
                        }
                        if(leaves[i]['Medal']=="Silver"){
                           total_silver+=1;
-      
-               }
+                       }
                let game = {};
       
                if(!(leaves[i]['Sport'] in sports))
@@ -95,8 +113,7 @@ for (var i = 0; i < btns.length; i++) {
              return obj;
            }).entries(matchesCSV);
       
-          // var line = new MultiLine();
-           //line.line();
+
       
       // ###################################################################################
       
@@ -138,26 +155,14 @@ for (var i = 0; i < btns.length; i++) {
       prepare_tree_data()
       const tree_map = new TreeMap(treeData, updateyear);
       tree_map.createTreeMap();
-      
-      let table = new Table2(teamData);
-      table.createTable(this.active_year);
-
-
-   console.log(table);
-   // add update year param
-   const gap_plot = new GapPlot(MedalsData, gdp_data, MedalsData, updateyear, table);
-   gap_plot.drawPlot();
- //});
-
-
 
   function updateyear(active_year) {
+       console.log("hello", treeData)
        that.active_year = active_year;
        
        prepare_tree_data();
        tree_map.updateTreeMap(treeData);
 
-       table.createTable(active_year);
   }
 
 });

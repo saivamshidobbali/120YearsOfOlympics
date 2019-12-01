@@ -7,11 +7,10 @@ class TreeMap {
  }
 
     createTreeMap() {
-
     let colorScale = d3.scaleOrdinal(d3.schemePaired);
     let that = this;
     
-       //let root = d3.hierarchy(this.MedalsData);	
+       //let root = d3.hierarchy(this.MedalsData);  
 
        //console.log(root.descendants());
        //console.log(root.links());
@@ -32,8 +31,8 @@ class TreeMap {
 
     let svgContainer = d3.select("#treemap")
                          .append("svg")
-                         .attr("width", 1000)
-                         .attr("height", 1000);
+                         .attr("width", 500)
+                         .attr("height", 500);
 
     let cell = svgContainer.selectAll("a")
             .data(root.leaves())
@@ -51,10 +50,10 @@ class TreeMap {
                 let a = d.ancestors();
                 return colorScale(a[a.length - 2].id); });
         
-        rects.on("mouseover", function(d,i) {		
-                     rects.html("<title>" + d.id + "</title>")	
-                    })					
-                .on("mouseout", function(d) {		
+        rects.on("mouseover", function(d,i) {       
+                     rects.html("<title>" + d.id + "</title>")  
+                    })                  
+                .on("mouseout", function(d) {       
 
                 });
 
@@ -64,17 +63,26 @@ class TreeMap {
     label.append("tspan")
             .attr("x", 3)
             .attr("y", 18)
+            .attr("class", "sport")
             .text(function(d){
-                       return d.id;
+                 if(d.x1 - d.x0 > 50 && d.y1 -d.y0 >25){
+                     return d.id
+                 }else{
+                     return ""
+                 }
                 }
             );
 
     label.append("tspan")
+            .attr("class", "medals")
             .attr("x", 15)
             .attr("y", 40)
             .text(
-            	function(d) {
-                    return d.medals;
+                function(d) {
+                    if(d.x1 - d.x0 > 60 && d.y1 -d.y0 >60) {
+                             return d.value;
+                    }
+                             return "";
                 }
             );
     
@@ -83,6 +91,56 @@ class TreeMap {
             .text(d =>  d.id + "\n" + d.medals)
             .style('fill', "white");             
 
+        d3.select('#treemap')
+            .append('div').attr('id', 'activeYear-bar');
+
+        let yearSlider = d3.select('#activeYear-bar')
+            .append('div').classed('slider-wrap', true)
+            .append('input').classed('slider', true)
+            .attr('type', 'range')
+            .attr('min', 1980)
+            .attr('max', 2016)
+            .attr('step', 4)
+            .attr('value', this.activeYear);
+
+        let sliderLabel = d3.select('.slider-wrap')
+            .append('div').classed('slider-label', true)
+            .append('svg');
+
+        let sliderText = sliderLabel.append('text').text(this.activeYear);
+        this.drawYearBar(this.activeYear)
+
+    }
+
+
+    drawYearBar() {
+        let that = this;
+
+        //Slider to change the activeYear of the data
+        let yearScale = d3.scaleLinear().domain([1980, 2016]).range([30, 730]);
+        let yearSlider = d3.select('.slider');
+
+        let tag = d3.select('.label')
+                    .attr("class", "activeYear-background");
+
+        yearSlider.on('input', function() {
+
+        //YOUR CODE HERE
+        let year = yearSlider.node().value;
+
+        let tag = d3.select('.activeYear-background');
+        tag.text(year);
+
+        let sliderLabel = d3.select('.slider-wrap');
+        let sliderText = sliderLabel.select('text').text(year);
+        sliderText.attr('x', yearScale(year));
+        sliderText.attr('y', 25)
+                  .attr('font-size', "large")
+                  .attr('font-weight', 'bold');
+
+        that.updateyear(year);
+
+        });
     }
 
     updateTreeMap(data) {
@@ -118,6 +176,8 @@ class TreeMap {
 
 
     let rects = cell.selectAll("rect")
+    let label = cell.selectAll("text")
+    label.remove();
     rects.remove();
 
     rects = cell.append("rect")
@@ -136,25 +196,31 @@ class TreeMap {
 
                 });
 
-    let label = cell.selectAll("text")
-                    .join('text')
+    label = cell.append("text")
                     .attr("clip-path", d => d.name);
         
-    label.selectAll("tspan")
+    label.append("tspan")
             .attr("x", 3)
             .attr("y", 18)
             .text(function(d){
-                       return d.id;
+                  if(d.x1 - d.x0 > 50 && d.y1 -d.y0 >25){
+
+                     return d.id;
+                  }else{
+                     return ""
+                  }
                 }
             );
 
-    label.selectAll("tspan")
-         .join('tspa')
+    label.append("tspan")
             .attr("x", 15)
             .attr("y", 40)
             .text(
             	function(d) {
-                    return d.medals;
+                    if(d.x1 - d.x0 > 50 && d.y1 -d.y0 >25) {
+                            return d.value;
+                    }
+                            return "";        
                 }
             );
     
@@ -163,6 +229,9 @@ class TreeMap {
         .join('title')
             .text(d =>  d.id + "\n" + d.medals)
             .style('fill', "white"); 
+
+
+    this.drawYearBar();        
     }
 
 }

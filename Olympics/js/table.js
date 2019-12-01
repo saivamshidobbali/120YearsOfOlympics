@@ -23,14 +23,11 @@ this.tableHeaders = ["Team", "Gold", "Silver", "Bronze", "Total"];
 
 beforeTable(activeYear){
   let that=this;
-  console.log("entered before");
 //  that.tableHeaders.splice(0, 0, "Team");
  let head = d3.select("thead").select("tr")
  let td = head.selectAll("th,td,td,td")
       .data(that.tableHeaders)
       .on("click",(d)=>{
-         console.log("d",d);
-        console.log("prssed");
         if (this.assending) {
         this.check(d,activeYear);
             this.assending = false;
@@ -45,8 +42,12 @@ beforeTable(activeYear){
 
 }
 
+selectedCountryTable(country) {
+  console.log(country);
+}
+
+
 check(d,activeYear){
-  console.log("enter check");
   if (d == "Team") {
       this.tableElements.sort(function (a, b) {
       //  d.values[i].value["Country Name"]
@@ -57,18 +58,16 @@ else if (d=="Gold") {
   this.tableElements.sort(function (a, b) {
     let x,y,x1;
 
-  for (let ele in a.values){
+  for(let ele in a.values){
   //  if(a.values[ele].value['Total Gold']!=undefined && b.values[ele].value['Total Gold']!=undefined){
-  x1=a.values[ele];
+        x1=a.values[ele];
 
         x=a.values[ele];//['Total Gold'];
         y= b.values[ele];
-        console.log(x1,x);
       //  console.log(y);
   //}
 }
 
-console.log("fffff",x);
   return x < y  ? -1 : 1        })
   }
 
@@ -83,7 +82,6 @@ console.log("fffff",x);
 */
 
 check2(d,activeYear){
-  console.log("enter check2");
 
   if (d == "Team") {
       this.tableElements.sort(function (a, b) {
@@ -102,11 +100,9 @@ check2(d,activeYear){
 
           x=a.values[ele]['value'];//['Total Gold'];
           y= b.values[ele];
-          console.log(x1,x);
         //  console.log(y);
     //}
   }
-  console.log("fffff",x);
 
     return y < x  ? -1 : 1        })
     }
@@ -117,13 +113,25 @@ check2(d,activeYear){
 createTable(activeYear){
 let that = this;
 
-console.log(that.tableElements);
 //let maxTotalGames= d3.max(that.tableElements, function (d) {
   // return d.values;
 //})
+let new_tableElements=[];
+for(let ele in that.tableElements){
+  for (let l in that.tableElements[ele].values){
+    //console.log(that.tableElements[ele].values[l].key);
+    if(that.tableElements[ele].values[l].key == activeYear){
+      //new_tableElements.append();
 
+    }
+    else{
+      //delete that.tableElements[ele].values[l].values
+    }
+
+  }
+}
 that.gameScale.domain([0,500]);
-  that.aggregateColorScale.domain([0,500]);
+that.aggregateColorScale.domain([0,500]);
 
 let tablerow = d3.select("tbody").selectAll("tr")
      .data(that.tableElements)

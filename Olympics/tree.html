@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Visualization – Homework 4</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <script src="https://d3js.org/d3.v5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.19/topojson.js"></script>
+    <script src="https://d3js.org/d3-geo-projection.v2.js"></script>
+    <script src="js/tree.js" async></script>
+    <script src="js/treescript.js" async></script>
+</head>
+
+<body>
+    <div class="header">
+        <h1>Olympic Data Analysis</h1>
+        <p class="info">Name: Saivamshi Dobbali; E-Mail: u1266122@utah.edu; UID: u1266122</p>
+        <p class="info">Name: Kiranmayee Dobbali; E-Mail: u1265299@utah.edu; UID: u1265299</p>
+
+    </div>
+    <div class="topnav" id="topnavbar">
+      <a class= "btn" href="Main.html">Main</a>
+      <a class="btn active" href="tree.html">TreeMap</a>
+      <a class="btn" href="LineGraph.html ">LineGraph</a>
+      <a class="btn" href="#about">About</a>
+    </div>
+
+
+
+    <div id="treemap" style="width:900px">
+        <h1>Olympic medals distribution</h1>
+
+
+    </div>
+
+    <div class="col-sm-2">
+          <br><br>
+          <button type="button" id = "button" onclick="updateCountry()" class="btn btn-primary btn-md">View Political Stability</button>
+          <br><br>
+         <select id="dropdown">
+        <option value="SYR">Syria</option>
+        <option value="JPN">Japan</option>
+        <option value="SGP">Singapore</option>
+        <option value="KOR">South Korea</option>
+        <option value="NZL">New Zealand</option>
+        <option value="NLD">Netherlands</option>
+        <option value="GRB">United Kingdom</option>
+        <option value="DEU">Germany</option>
+        <option value="USA">United States</option>
+        <option value="CHN">China</option>
+        <option value="LBY">Libya</option>
+        <option value="PRK">North Korea</option>
+        <option value="IRQ">Iraq</option>
+        <option value="IND">India</option>
+        <option value="PAK">Pakistan</option>
+        <option value="YEM">Yemen</option>
+        <option value="AFG">Afghanisthan</option>
+        <option value="SOM">Somalia</option>
+        </select>
+      
+    </div>
+
+</body>
+
+</html>

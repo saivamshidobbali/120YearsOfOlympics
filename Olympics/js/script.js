@@ -1,8 +1,8 @@
 d3.json('data/gdp.json').then( gdp_data=> {
  this.active_year = "1980";
 
- d3.csv('data/t.csv').then(matchesCSV=>{
-  
+ d3.csv('data/athlete_events_modified.csv').then(matchesCSV=>{
+
   let MedalsData = d3.nest()
                   .key(d=> d.NOC)
                   .key(d=>d.Year)
@@ -106,11 +106,11 @@ len= leaves.length;
 
   /*
   // Tree data makeup
-  teamData = teamData.map(function(obj) { 
-                    obj['children'] = obj['values']; // Assign new key 
-                    delete obj['values']; // Delete old key 
-                    return obj; 
-                }); 
+  teamData = teamData.map(function(obj) {
+                    obj['children'] = obj['values']; // Assign new key
+                    delete obj['values']; // Delete old key
+                    return obj;
+                });
 
   console.log(teamData);
 
@@ -118,13 +118,13 @@ len= leaves.length;
   //console.log(i);
   //console.log(teamData[i]['children']);
   let list = teamData[i]['children'];
-  
-  teamData[i]['children'] = list.map(function(obj) { 
-                    obj['children'] = obj['value']; // Assign new key 
-                    delete obj['value']; // Delete old key 
-                    return obj; 
-                 });  
-  } 
+
+  teamData[i]['children'] = list.map(function(obj) {
+                    obj['children'] = obj['value']; // Assign new key
+                    delete obj['value']; // Delete old key
+                    return obj;
+                 });
+  }
   */
 
 
@@ -145,8 +145,8 @@ function prepare_tree_data() {
                           'parent': 'root'});
 
           for (let k = 0; k < teamData[i]['values'][j]['value']['Sports'].length; k++) {
-               
-                treeData.push( {'name': teamData[i]['values'][j]['value']['Sports'][k].key, 
+
+                treeData.push( {'name': teamData[i]['values'][j]['value']['Sports'][k].key,
                                 'medals': teamData[i]['values'][j]['value']['Sports'][k]['value']['Total Medals'],
                                 'parent': teamData[i].key })
 
@@ -162,7 +162,7 @@ function prepare_tree_data() {
   }
 
   treeData[0]['medals'] = "undefined";
-}  
+}
 
 
 prepare_tree_data()
@@ -185,7 +185,7 @@ function updateyear(active_year) {
        // table.createTable(this.active_year);
        // table.updateTable(this.active_year);
 }
- 
+
 });
 
 });

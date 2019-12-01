@@ -10,10 +10,8 @@
     <script src="https://d3js.org/d3.v5.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.19/topojson.js"></script>
     <script src="https://d3js.org/d3-geo-projection.v2.js"></script>
-    <script src="js/table.js" async></script>
-    <script src="js/gap_plot.js" async></script>
-    <script src="js/script.js" async></script>
-
+    <script src="js/line_graph.js" async></script>
+    <script src="js/script_2.js" async></script>
 </head>
 
 <body>
@@ -24,35 +22,21 @@
 
     </div>
 
-
-
-    <div class="wrapper">
-
-      <div id="scatter-plot" class="view" style="width:900px">
-
-      </div>
-
-      <div class="innerWrapper">
-        <table id="matchTable">
-              <thead>
-              <tr>
-                  <th class="Team">Team</th>
-                  <td class="Gold"> Gold </td>
-                  <td class="Silver">Silver</td>
-                  <td class="Bronze">Bronze</td>
-                  <td class="Total">Total</td>
-              </tr>
-
-              </thead>
-
-              <tbody>
-
-              </tbody>
-        </table>
-      </div>
-
-  </div>
-
+    <div class="topnav" id="topnavbar">
+      <a class= "btn" href="Main.html">Main</a>
+      <a class="btn" href="#">TreeMap</a>
+      <a class="btn active" href="LineGraph.html ">LineGraph</a>
+      <a class="btn" href="#about">About</a>
+    </div>
+<div id="chart"></div>
+<div class="control-group">
+    <button  id="JPN">
+      Japan
+    </button>
+    <button onclick="select()">
+        Clear All
+    </button>
+</div>
 </body>
 
 </html>

@@ -57,18 +57,18 @@ else if (d=="Gold") {
   this.tableElements.sort(function (a, b) {
     let x,y,x1;
 
-  for (let ele in a.values){
+  for(let ele in a.values){
   //  if(a.values[ele].value['Total Gold']!=undefined && b.values[ele].value['Total Gold']!=undefined){
-  x1=a.values[ele];
+        x1=a.values[ele];
 
         x=a.values[ele];//['Total Gold'];
         y= b.values[ele];
-        console.log(x1,x);
+        console.log(x,y);
       //  console.log(y);
   //}
 }
 
-console.log("fffff",x);
+  console.log("fffff",x);
   return x < y  ? -1 : 1        })
   }
 
@@ -121,9 +121,26 @@ console.log(that.tableElements);
 //let maxTotalGames= d3.max(that.tableElements, function (d) {
   // return d.values;
 //})
+let new_tableElements=[];
+for(let ele in that.tableElements){
+  console.log("****");
+  console.log("all eles",that.tableElements[ele].values);
+  for (let l in that.tableElements[ele].values){
+    //console.log(that.tableElements[ele].values[l].key);
+    if(that.tableElements[ele].values[l].key == activeYear){
+      console.log(that.tableElements[ele].values[l]);
+      //new_tableElements.append();
 
+    }
+    else{
+      console.log(that.tableElements[ele].values[l].key);
+      //delete that.tableElements[ele].values[l].values
+    }
+
+  }
+}
 that.gameScale.domain([0,500]);
-  that.aggregateColorScale.domain([0,500]);
+that.aggregateColorScale.domain([0,500]);
 
 let tablerow = d3.select("tbody").selectAll("tr")
      .data(that.tableElements)

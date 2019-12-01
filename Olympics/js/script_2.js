@@ -2,9 +2,9 @@ this.active_year = "1980";
 
 // Add active class to the current button (highlight it)
 var header = document.getElementById("topnavbar");
-console.log(header);
+//console.log(header);
 var btns = header.getElementsByClassName("btn");
-console.log(btns);
+//console.log(btns);
 for (var i = 0; i < btns.length; i++) {
   btns[i].addEventListener("click", function() {
   var current = document.getElementsByClassName("active");

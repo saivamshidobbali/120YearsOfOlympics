@@ -18,7 +18,8 @@ this.aggregateColorScale = d3.scaleLinear()
         .range(["#d2edcd","#084081"]);
 
 this.tableHeaders = ["Team", "Gold", "Silver", "Bronze", "Total"];
-
+this.flag=0;
+//this.data=this.tableElements;
 }
 
 beforeTable(activeYear){
@@ -29,8 +30,11 @@ beforeTable(activeYear){
  let td = head.selectAll("th,td,td,td")
       .data(that.tableHeaders)
       .on("click",(d)=>{
+      if(that.flag==0)  {
+
          console.log("d",d);
         console.log("prssed");
+
         if (this.assending) {
         this.check(d,activeYear);
             this.assending = false;
@@ -40,87 +44,283 @@ beforeTable(activeYear){
             this.assending = true;
         }
         this.createTable(activeYear);
-
+}
       });
 
 }
 
 check(d,activeYear){
-  console.log("enter check");
-  if (d == "Team") {
-      this.tableElements.sort(function (a, b) {
-      //  d.values[i].value["Country Name"]
-      //console.log("*****",a.values.key);
-              return a.values[0].value['Country Name'] < b.values[0].value['Country Name']  ? -1 : 1        })
-  }
-else if (d=="Gold") {
-  this.tableElements.sort(function (a, b) {
-    let x,y,x1;
+            console.log("enter check");
+            if (d == "Team") {
+                this.tableElements.sort(function (a, b) {
+                return a.values[0].value['Country Name'] < b.values[0].value['Country Name']  ? -1 : 1        })
+            }
+          else if (d=="Gold") {
+            this.tableElements.sort(function (a, b) {
+              let i=0;
+                    for( i=0;i<a.values.length;i++){
+                      if(a.values[i].key== activeYear){
+                      //  let x = a.values[i].value['Total Gold'];
+                        break;
+                      }
+                    }
 
-  for(let ele in a.values){
-  //  if(a.values[ele].value['Total Gold']!=undefined && b.values[ele].value['Total Gold']!=undefined){
-        x1=a.values[ele];
 
-        x=a.values[ele];//['Total Gold'];
-        y= b.values[ele];
-        console.log(x,y);
-      //  console.log(y);
-  //}
+              let j=0;
+              for( j=0;j<b.values.length;j++){
+                if(b.values[j].key== activeYear){
+                //  let x = a.values[i].value['Total Gold'];
+                  break;
+                }
+              }
+
+              if(i==a.values.length){
+                return -1;
+              }
+              if(j==b.values.length){
+                return 1;
+              }
+              return  a.values[i].value['Total Gold']- b.values[j].value['Total Gold'];
+
+              })
+            } //elseif gold
+/////////////////////////////////
+          else if (d=="Silver") {
+            this.tableElements.sort(function (a, b) {
+              let i=0;
+                    for( i=0;i<a.values.length;i++){
+                      if(a.values[i].key== activeYear){
+                      //  let x = a.values[i].value['Total Gold'];
+                        break;
+                      }
+                    }
+
+
+              let j=0;
+              for( j=0;j<b.values.length;j++){
+                if(b.values[j].key== activeYear){
+                //  let x = a.values[i].value['Total Gold'];
+                  break;
+                }
+              }
+
+              if(i==a.values.length){
+                return -1;
+              }
+              if(j==b.values.length){
+                return 1;
+              }
+              return  a.values[i].value['Total Silver']- b.values[j].value['Total Silver'];
+
+              })
+            } //elseif silver
+
+
+            /////////////////////////////////
+                      else if (d=="Bronze") {
+                        this.tableElements.sort(function (a, b) {
+                          let i=0;
+                                for( i=0;i<a.values.length;i++){
+                                  if(a.values[i].key== activeYear){
+                                  //  let x = a.values[i].value['Total Gold'];
+                                    break;
+                                  }
+                                }
+
+
+                          let j=0;
+                          for( j=0;j<b.values.length;j++){
+                            if(b.values[j].key== activeYear){
+                            //  let x = a.values[i].value['Total Gold'];
+                              break;
+                            }
+                          }
+
+                          if(i==a.values.length){
+                            return -1;
+                          }
+                          if(j==b.values.length){
+                            return 1;
+                          }
+                          return  a.values[i].value['Total Bronze']- b.values[j].value['Total Bronze'];
+
+                          })
+                        } //elseif Brone
+                        /////////////////////////////////
+                          else if (d=="Total") {
+                            this.tableElements.sort(function (a, b) {
+                              let i=0;
+                                    for( i=0;i<a.values.length;i++){
+                                      if(a.values[i].key== activeYear){
+                                      //  let x = a.values[i].value['Total Gold'];
+                                        break;
+                                      }
+                                    }
+
+
+                              let j=0;
+                              for( j=0;j<b.values.length;j++){
+                                if(b.values[j].key== activeYear){
+                                //  let x = a.values[i].value['Total Gold'];
+                                  break;
+                                }
+                              }
+
+                              if(i==a.values.length){
+                                return -1;
+                              }
+                              if(j==b.values.length){
+                                return 1;
+                              }
+                              return  a.values[i].value['Total Medals']- b.values[j].value['Total Medals'];
+
+                              })
+                            } //elseif Total
+
 }
-
-  console.log("fffff",x);
-  return x < y  ? -1 : 1        })
-  }
-
-
-}
-
-  /*else {
-      this.teamData.sort(function (a, b) {
-          return a["Total"] - b["Total"];
-      })
-  }
-*/
 
 check2(d,activeYear){
-  console.log("enter check2");
+            console.log("enter check2");
 
-  if (d == "Team") {
-      this.tableElements.sort(function (a, b) {
-
-        //onsole.log("*****",a.values['key']);
-
-          return b.values[0].value['Country Name'] < a.values[0].value['Country Name']  ? -1 : 1
-      })
-  } else if (d=="Gold") {
-    this.tableElements.sort(function (a, b) {
-    //  d.values[i].value["Country Name"]
-    let x,y,x1;
-    for (let ele in a.values){
-    //  if(a.values[ele].value['Total Gold']!=undefined && b.values[ele].value['Total Gold']!=undefined){
-    x1=a.values[ele];
-
-          x=a.values[ele]['value'];//['Total Gold'];
-          y= b.values[ele];
-          console.log(x1,x);
-        //  console.log(y);
-    //}
-  }
-  console.log("fffff",x);
-
-    return y < x  ? -1 : 1        })
-    }
-}
+            if (d == "Team") {
+                this.tableElements.sort(function (a, b) {
+                    return b.values[0].value['Country Name'] < a.values[0].value['Country Name']  ? -1 : 1
+                })
+            }
+            else if (d=="Gold") {
+              this.tableElements.sort(function (a, b) {
+                let i=0;
+                      for( i=0;i<a.values.length;i++){
+                        if(a.values[i].key== activeYear){
+                        //  let x = a.values[i].value['Total Gold'];
+                          break;
+                        }
+                      }
 
 
+                let j=0;
+                for( j=0;j<b.values.length;j++){
+                  if(b.values[j].key== activeYear){
+                  //  let x = a.values[i].value['Total Gold'];
+                    break;
+                  }
+                }
 
-createTable(activeYear){
+                if(i==a.values.length){
+                  return -1;
+                }
+                if(j==b.values.length){
+                  return 1;
+                }
+                return  b.values[j].value['Total Gold']- a.values[i].value['Total Gold'];
+              })
+              }
+              else if (d=="Silver") {
+                this.tableElements.sort(function (a, b) {
+                  let i=0;
+                        for( i=0;i<a.values.length;i++){
+                          if(a.values[i].key== activeYear){
+                          //  let x = a.values[i].value['Total Gold'];
+                            break;
+                          }
+                        }
+
+
+                  let j=0;
+                  for( j=0;j<b.values.length;j++){
+                    if(b.values[j].key== activeYear){
+                    //  let x = a.values[i].value['Total Gold'];
+                      break;
+                    }
+                  }
+
+                  if(i==a.values.length){
+                    return -1;
+                  }
+                  if(j==b.values.length){
+                    return 1;
+                  }
+                  return  b.values[j].value['Total Silver']- a.values[i].value['Total Silver'];
+
+                  })
+                } //elseif silver
+                else if (d=="Bronze") {
+                  this.tableElements.sort(function (a, b) {
+                    let i=0;
+                          for( i=0;i<a.values.length;i++){
+                            if(a.values[i].key== activeYear){
+                            //  let x = a.values[i].value['Total Gold'];
+                              break;
+                            }
+                          }
+
+
+                    let j=0;
+                    for( j=0;j<b.values.length;j++){
+                      if(b.values[j].key== activeYear){
+                      //  let x = a.values[i].value['Total Gold'];
+                        break;
+                      }
+                    }
+
+                    if(i==a.values.length){
+                      return -1;
+                    }
+                    if(j==b.values.length){
+                      return 1;
+                    }
+                    return  b.values[j].value['Total Bronze']- a.values[i].value['Total Bronze'];
+
+                    })
+                  } //elseif silver
+
+                  else if (d=="Total") {
+                    this.tableElements.sort(function (a, b) {
+                      let i=0;
+                            for( i=0;i<a.values.length;i++){
+                              if(a.values[i].key== activeYear){
+                              //  let x = a.values[i].value['Total Gold'];
+                                break;
+                              }
+                            }
+
+
+                      let j=0;
+                      for( j=0;j<b.values.length;j++){
+                        if(b.values[j].key== activeYear){
+                        //  let x = a.values[i].value['Total Gold'];
+                          break;
+                        }
+                      }
+
+                      if(i==a.values.length){
+                        return -1;
+                      }
+                      if(j==b.values.length){
+                        return 1;
+                      }
+                      return  b.values[j].value['Total Medals']- a.values[i].value['Total Medals'];
+
+                      })
+                    } //elseif silver
+
+
+              }
+
+createTable(activeYear,data){
 let that = this;
-
-console.log(that.tableElements);
+if(that.flag==1){
+  //that.tableElements=data;
+  //that.data=that.tableElements;
+}
+else{
+data=that.tableElements;
+}
+console.log("***",data);
 //let maxTotalGames= d3.max(that.tableElements, function (d) {
   // return d.values;
 //})
+/*
 let new_tableElements=[];
 for(let ele in that.tableElements){
   console.log("****");
@@ -139,30 +339,34 @@ for(let ele in that.tableElements){
 
   }
 }
+
+*/
 that.gameScale.domain([0,500]);
 that.aggregateColorScale.domain([0,500]);
-
+let new_tableElements= data.filter(function(d){
+        for(let ele in d.values){
+           if(d.values[ele].key==activeYear){
+             return 1;
+           }
+            }
+            return 0;
+    })
+    console.log("new",new_tableElements);
 let tablerow = d3.select("tbody").selectAll("tr")
-     .data(that.tableElements)
+     .data(new_tableElements)
      .join('tr');
 
 //tablerow.text(function(d){
 //return d.key;
 let tablehead = tablerow.selectAll("th")
                         .data(function (d) {
-                        //  console.log([d]);
                           return [d];   })
                         .join("th")
                         .text(function(d,i){
-                          //if(d.value.key.value.type == "game"){
-                          //return d.key;
-                        //}
-                        //else {
-                        //  return d.key;
-                        //}
-                     //
+
                       return d.values[i].value["Country Name"];
-                   });
+                   })
+                   .on("click", d => this.updateList(d,activeYear));
 
 
 let td = tablerow.selectAll("td")
@@ -171,13 +375,17 @@ let td = tablerow.selectAll("td")
                   //  console.log(d.values);
                    let a = d.values;
                    for (let ele in a){
-                  //   console.log("ele",d.values[ele].key);
-                     if(d.values[ele].key==activeYear){
-                       list.push(d.values[ele].value['Total Gold'])
-                       list.push(d.values[ele].value['Total Bronze'])
-                       list.push(d.values[ele].value['Total Silver'])
-                       list.push(d.values[ele].value['Total Medals'])
-                     }
+                    // if( d.values[ele].value.type=="aggregate"){
+                       if(d.values[ele].key==activeYear){
+
+                         list.push(d.values[ele].value['Total Gold']);
+                         list.push(d.values[ele].value['Total Silver']);
+                         list.push(d.values[ele].value['Total Bronze']);
+
+                         list.push(d.values[ele].value['Total Medals']);
+                       }
+                    // }
+
                    }
 
 
@@ -197,15 +405,12 @@ let td = tablerow.selectAll("td")
                       return [d];
                   }).join('rect')
                   .attr("width", function (d) {
-//console.log(d);
                       return that.gameScale(d);
                   })
                   .attr("height", 40)
                   .attr("fill", function (d) {
                       return that.aggregateColorScale(d)
-                  })                  //.attr("fill", function (d) {
-                  //    return aggregateColorScale(d.value)
-                  //})
+                  })
         let barstext = bars.selectAll("text")
             .data(function (d) {
                 return [d];
@@ -218,7 +423,67 @@ let td = tablerow.selectAll("td")
                 return d;
             })
 
+}
+
+updateList(i,activeYear) {
+  let that=this;
+if(that.flag==0){
+  console.log("pressded table ele",activeYear);
+    // ******* TODO: PART IV *******
+  let new_elements=[];
+  let row={};
+
+//  console.log("i.values",i.values);
+  for(let k=0; k<i.values.length;k++){
+    if(i.values[k].key==activeYear){
+    //  console.log(i.values[k]);
+        new_elements[0]=i;
+        console.log(new_elements);
+        for(let m=0; m< i.values.length;m++){
+          if(i.values[m].key==activeYear){
+            let len =Object.keys(i.values[m].value.Sports).length;
+          //  console.log(i.values[m].value.Sports);
+             const keys = Object.keys(i.values[m].value.Sports);
+             const values = Object.values(i.values[m].value.Sports);
+             console.log("values",values);
+            for(let n=0;n<len;n++){
+              let arr=[]
+              arr[0]={'key':String(activeYear),'value':{'Country Name':keys[n],'Total Gold':values[n][0],'Total Silver':values[n][1],'Total Bronze':values[n][2],'Total Medals':values[n][3]}};
+              console.log({'key':keys[n],'values':arr});
+            //  console.log({'key':keys[n],'values':{'Total Gold':values[n][0]}});
+              row[n+1]={'key':keys[n],'values':arr};
+
+            }
+            //row['key']= i.values[m].value.Sports;
+            //console.log(row);
+          }
+        }
+    }
+  }
+  console.log("ROW",row);
+//join dicts
+for(let p=0;p<Object.keys(row).length;p++){
+  new_elements[p+1]=row[p+1];
+}
+
+console.log("new_ele",new_elements);
+
+
+  //that.tableElements=new_elements;
+that.flag=1;
+
+this.createTable(activeYear,new_elements);
+}
+else{
+  that.flag=0;
+
+  this.createTable(activeYear,0);
 
 }
+
+}
+
+
+
 
 }

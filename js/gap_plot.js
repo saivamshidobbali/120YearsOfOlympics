@@ -386,12 +386,12 @@ class GapPlot {
                     circles.style('opacity', '0.5')
                     d3.select(this).style('opacity', '1' ).attr('stroke-width', "4")
 
-                    that.Table.selectedCountryTable(d.country);
+                    that.Table.selectedCountryTable(d.country, that.activeYear);
                })
                .on('mouseout', function(d) {
                     circles.style('opacity', '1').attr('stroke-width', "1");
 
-                    that.Table.selectedCountryTable(null);
+                    that.Table.selectedCountryTable(null, that.activeYear);
 
                })
 
@@ -534,6 +534,7 @@ class GapPlot {
                   .attr('font-weight', 'bold');
 
 
+        that.activeYear = year;
         //that.updateYear(year);
         that.updatePlot(year, dropX.node().value , dropY.node().value, dropC.node().value);
 

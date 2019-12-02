@@ -12,7 +12,6 @@ line_graph(){
   flag=1;
   }
   */
-  document.getElementById("JPN").addEventListener ("click", myFunction, false);
   function myFunction(){
    console.log("pressed");
    category='JPN';

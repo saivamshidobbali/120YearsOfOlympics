@@ -31,14 +31,11 @@ for (var i = 0; i < btns.length; i++) {
                   .entries(matchesCSV)
 
 
-<<<<<<< HEAD:Olympics/js/treescript.js
 
-console.log(gender)
-=======
   let genderData = d3.nest()
                   .key(d=>d.Year)
                   .rollup(leaves => {
-                
+
                   let gender = {};
                   gender["M"] = [];
                   gender["F"] = [];
@@ -50,9 +47,9 @@ console.log(gender)
 
                       function g(i) {
                         if (gender[leaves[i]['Sex']].indexOf(leaves[i]['Name']) == -1)
-                            gender[leaves[i]['Sex']].push(leaves[i]['Name']); 
+                            gender[leaves[i]['Sex']].push(leaves[i]['Name']);
                       }
-      
+
 
                  gender["M"] = gender["M"].length;
                  gender["F"] = gender["F"].length;
@@ -61,11 +58,11 @@ console.log(gender)
                     "values": gender
                   }
 
-                      return obj;     
+                      return obj;
                   })
                   .entries(matchesCSV);
 
-console.log(genderData) 
+console.log(genderData)
 
 let genderData_complete = null
 function  prep_data_for_line() {
@@ -73,7 +70,7 @@ function  prep_data_for_line() {
                   .key(d=>d.Year)
                   .key(d=>d.NOC)
                   .rollup(leaves => {
-                
+
                   let gender = {};
                   gender["M"] = [];
                   gender["F"] = [];
@@ -85,9 +82,9 @@ function  prep_data_for_line() {
 
                       function g(i) {
                         if (gender[leaves[i]['Sex']].indexOf(leaves[i]['Name']) == -1)
-                            gender[leaves[i]['Sex']].push(leaves[i]['Name']); 
+                            gender[leaves[i]['Sex']].push(leaves[i]['Name']);
                       }
-      
+
 
                  gender["M"] = gender["M"].length;
                  gender["F"] = gender["F"].length;
@@ -96,10 +93,10 @@ function  prep_data_for_line() {
                     "values": gender
                   }
 
-                      return obj;     
+                      return obj;
                   })
                   .entries(matchesCSV);
-return genderData_complete                  
+return genderData_complete
 
 }
 
@@ -112,7 +109,6 @@ console.log(genderData_complete)
 
 
 
->>>>>>> fbea0e63462827e5b57909446bebd2c711c6bf7d:js/treescript.js
 
 
 // ###################################################################################

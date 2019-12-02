@@ -498,9 +498,15 @@ svg {
 }
 
 tbody tr:hover {
-    background-color: #feebe2;
+    background-color: #d8ffd8;
 }
 
+
+.row {
+    width:1010px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
 
 .subcat{
 color: green;

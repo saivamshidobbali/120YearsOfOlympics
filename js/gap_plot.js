@@ -26,11 +26,8 @@ class GapPlot {
         this.updateYear = updateYear;
         this.Table = Table;
 
-<<<<<<< HEAD:Olympics/js/gap_plot.js
-=======
         this.play_stop = 0;
-        
->>>>>>> fbea0e63462827e5b57909446bebd2c711c6bf7d:js/gap_plot.js
+
     }
 
     sleep(milliseconds) {
@@ -173,17 +170,17 @@ class GapPlot {
 
         icon.on('click', function(d) {
           for (let i = 0; i<dummy.length ;i++) {
-               window.clearTimeout(dummy[i]) 
+               window.clearTimeout(dummy[i])
           }
 
           if (dummy.length) {
                 d3.select(this).classed('pause', 'false');
-                d3.select(this).classed('button', 'true');    
-  
+                d3.select(this).classed('button', 'true');
+
                 this.play_stop = 0;
                 dummy = []
                 return;
-          } 
+          }
 
           /*
            d3.select(".slider")
@@ -201,11 +198,11 @@ class GapPlot {
 
             let event = new Event('input', {
                 bubbles: true,
-                cancelable: true,  
+                cancelable: true,
             });
 
 
-           d3.select(this).classed('pause', 'true');      
+           d3.select(this).classed('pause', 'true');
            d3.select(this).classed('button', 'false');
 
             yearSlider.node().value = 1980;
@@ -213,21 +210,13 @@ class GapPlot {
 
          let i = 1000;
          for (let elem in year_list) {
-<<<<<<< HEAD:Olympics/js/gap_plot.js
 
-            window.setTimeout(()=> { yearSlider.node().value = year_list[elem];
-                                     yearSlider.node().dispatchEvent(event);}, i );
-            i = i+2000;
-          }
-=======
-            
           dummy.push(window.setTimeout(()=> { yearSlider.node().value = year_list[elem];
                                      yearSlider.node().dispatchEvent(event);}, i ));
             i = i+2000;
           }
- 
 
->>>>>>> fbea0e63462827e5b57909446bebd2c711c6bf7d:js/gap_plot.js
+
 
         });
 

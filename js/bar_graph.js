@@ -66,6 +66,7 @@ this.data=[{"key":"GBR","values":[{"key":"1980","value":47},{"key":"1984","value
           }
       );
 
+      this.color = d3.scaleOrdinal(d3.schemePaired);
 
 }
 
@@ -79,6 +80,7 @@ let svg = d3.select("#chart")
         .attr("height", that.height + that.margin.top + that.margin.bottom)
         // here we create a master <g> element and move everything by the margins
         .append("g")
+        .attr("class","bars")
         .attr("transform", "translate(" + that.margin.left + "," +that.margin.top + ")");
 
 
@@ -184,7 +186,7 @@ createBar(){
 let that=this;
 let axis_for=0;
 
-let svg=d3.select("#chart").selectAll("g");
+let svg=d3.select("#chart").selectAll(".bars");
   let barGroups = svg.selectAll(".barGroup")
                     .data(that.new_data.filter(function (d) {
                       for(let j=0;j<d.values.length;j++){
@@ -242,11 +244,16 @@ barGroups.select("text")
 
 
 
-
 barGroups.select("rect")
           .attr("x", 50)
           // bandwidth() accesses the automatically computed width of the bar
-          .attr("height", 30)
+          .attr("height", 30)          .style("fill", function(d){
+                      for(let j=0;j<d.values.length;j++){
+                        return   that.color(d.key);
+          }
+
+                    }
+                  )
           .transition().duration(that.animationDuration)
           .attr("width", function (d,i) {
               // here we call the scale function.
@@ -256,8 +263,11 @@ barGroups.select("rect")
                 }
               }
               return;
-          });
+          })
+;
+
 //          barGroups.exit().remove();
+barGroups.exit().remove();
 
            d3.select(".axis")
            .attr("transform", `translate(${that.textWidth},${axis_for+60})`)

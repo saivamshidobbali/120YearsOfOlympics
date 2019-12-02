@@ -49,23 +49,16 @@ class TreeMap {
             .attr("fill",  d => {
                 let a = d.ancestors();
                 return colorScale(a[a.length - 2].id); });
-<<<<<<< HEAD:Olympics/js/tree.js
+
 
         rects.on("mouseover", function(d,i) {
-                     rects.html("<title>" + d.id + "</title>")
+                     rects.html("<title>" + "Sport: "+ d.id + "\n" +"Country: "+ d.data.parent +"\n" + "Medals Won: "+d.data.medals +"</title>")
+                     cell.selectAll("rect").style("opacity", "0.5")
+                     d3.select(this).style("opacity", "1")
                     })
                 .on("mouseout", function(d) {
-=======
-        
-        rects.on("mouseover", function(d,i) {       
-                     rects.html("<title>" + "Sport: "+ d.id + "\n" +"Country: "+ d.data.parent +"\n" + "Medals Won: "+d.data.medals +"</title>") 
-                     cell.selectAll("rect").style("opacity", "0.5")
-                     d3.select(this).style("opacity", "1") 
-                    })                  
-                .on("mouseout", function(d) {       
                     cell.selectAll("rect").style("opacity", "1")
                 })
->>>>>>> fbea0e63462827e5b57909446bebd2c711c6bf7d:js/tree.js
 
 
     let label = cell.append("text")
@@ -199,22 +192,15 @@ class TreeMap {
             .attr("fill",  d => {
                 let a = d.ancestors();
                 return colorScale(a[a.length - 2].id); });
-<<<<<<< HEAD:Olympics/js/tree.js
+
 
         rects.on("mouseover", function(d,i) {
-                     rects.html("<title>" + d.id + "</title>")
+                     rects.html("<title>" + "Sport: "+ d.id + "\n" +"Country: "+ d.data.parent +"\n" + "Medals Won: "+d.data.medals +"</title>")
+                     cell.selectAll("rect").style("opacity", "0.5")
+                     d3.select(this).style("opacity", "1")
                     })
                 .on("mouseout", function(d) {
-=======
-        
-        rects.on("mouseover", function(d,i) {		
-                     rects.html("<title>" + "Sport: "+ d.id + "\n" +"Country: "+ d.data.parent +"\n" + "Medals Won: "+d.data.medals +"</title>") 
-                     cell.selectAll("rect").style("opacity", "0.5")
-                     d3.select(this).style("opacity", "1") 	
-                    })					
-                .on("mouseout", function(d) {		
-                     cell.selectAll("rect").style("opacity", "1")  
->>>>>>> fbea0e63462827e5b57909446bebd2c711c6bf7d:js/tree.js
+                     cell.selectAll("rect").style("opacity", "1")
 
                 });
 

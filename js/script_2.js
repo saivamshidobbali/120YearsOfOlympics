@@ -17,7 +17,7 @@ var line = new MultiLine();
 line.line_graph();
 d3.csv('data/truncated_latest.csv').then(matchesCSV=>{
 let teamData = d3.nest()
-                .key(d=> d.NOC)
+                .key(d=>d.NOC)
                 .key(d=>d.Year)
                 .rollup(leaves => {
 let total_medals=0;
@@ -55,7 +55,7 @@ console.log(teamData);
 
    // var line = new MultiLine();
     //line.line();
-    /*   "use strict";
+       "use strict";
 exportToJsonFile(teamData);
     function exportToJsonFile(teamData) {
         let dataStr = JSON.stringify(teamData);
@@ -69,5 +69,5 @@ exportToJsonFile(teamData);
         linkElement.click();
     }
 
-*/
+
 });

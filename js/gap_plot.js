@@ -277,6 +277,8 @@ class GapPlot {
         let y_axis = d3.axisLeft(y_axis_scale);
         let svgGroup = d3.select('#chart-view').select('.plot-svg').selectAll('.wrapper-group');
 
+
+
         let X_axis = svgGroup.select("#xaxis")
                              .join('g')
                              .attr("transform", "translate(50, 480)")
@@ -357,28 +359,39 @@ class GapPlot {
                              .domain([0, Y_max])
                              .range([470,0]);
 
+
+
+
+        let colorScale = d3.scaleOrdinal(d3.schemePaired);
+
+        console.log(colorScale("USA"))
         svgGroup = d3.select('#chart-view').select('.plot-svg').selectAll('.wrapper-group');
 
         const circles = svgGroup.selectAll('circle').data(list_of_plot_data).join('circle');
 
         let that = this;
         circles.attr('cx', function(d) {
+                                   console.log(d);
                                    return circle_x_scale(d.xVal);
                                    })
                .attr('cy', d => circle_y_scale(d.yVal))
                .attr('r', d=> circleSizer(d))
                .attr("transform", "translate(50, 0 )")
-               .attr("class",  d=> this.get_region(d.country))
+               .style("fill", d => colorScale(d.country))
 
                .on('mouseover', function(d){
-                    circles.html("<title>" + d.country + "</title>")
+                    console.log(xIndicator);
+
+                    circles.html("<title>" + "Country: " +d.country + "\n" + xIndicator+ ": " + d.xVal + "\n" + yIndicator + ": " + d.yVal +"\n" +circleSizeIndicator +": "+ d.circleSize+"</title>")
                     circles.style('opacity', '0.5')
-                    d3.select(this).style('opacity', '1' );
-                    that.Table.selectedCountryTable(d.country,that.activeYear);
+                    d3.select(this).style('opacity', '1' ).attr('stroke-width', "4")
+
+                    that.Table.selectedCountryTable(d.country);
                })
                .on('mouseout', function(d) {
-                    circles.style('opacity', '1')
-                    that.Table.selectedCountryTable(null,that.activeYear);
+                    circles.style('opacity', '1').attr('stroke-width', "1");
+
+                    that.Table.selectedCountryTable(null);
 
                })
 
@@ -488,7 +501,6 @@ class GapPlot {
     }
 
     drawYearBar() {
-        console.log("this asdadadas")
 
         let that = this;
 

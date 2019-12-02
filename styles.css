@@ -4,15 +4,16 @@
 
 .wrapper {
   display: grid;
-  grid-template-columns: auto auto auto;
-  grid-gap: 10px;
-  padding: 10px;
+  grid-template-columns: 2fr 2fr 2fr;
+
+  grid-gap: 40px;
+  padding: 40px;
 }
 
 .wrapper > div {
   background-color: rgba(255, 255, 255, 0.8);
   text-align: center;
-  padding: 20px 0;
+  padding: 40px 0;
 }
 
 .highlight {
@@ -315,7 +316,7 @@ div.dropdown-wrapper {
 
   position: absolute;
   left: 10px;
-  top: 840px;
+  top: 890px;
 
   box-sizing: border-box;
   height: 74px;
@@ -336,7 +337,7 @@ div.dropdown-wrapper {
 .pause {
   position: absolute;
   left: 10px;
-  top: 840px;
+  top: 890px;
 
   box-sizing: border-box;
   height: 74px;

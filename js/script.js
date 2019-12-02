@@ -166,7 +166,6 @@ exportToJsonFile(teamData);
      let that = this;
 
      function prepare_tree_data() {
-                    console.log("%%%%%%%%%5%%%%%%%%%",teamData);
                      treeData = [];
                      treeData.push({'name': 'root', 'medals': 0, 'parent': ""});
 
@@ -203,14 +202,23 @@ exportToJsonFile(teamData);
      tree_map.createTreeMap();
 
      let table = new Table2(teamData);
-     table.beforeTable(this.active_year);
-
      table.createTable(this.active_year);
 
-  console.log(table);
-  // add update year param
-  const gap_plot = new GapPlot(MedalsData, gdp_data, MedalsData, updateyear, table);
-  gap_plot.drawPlot();
+
+     console.log(table);
+     // add update year param
+
+     d3.csv('data/athlete_events_modified.csv').then( participants=> {
+     let participantsInfo = d3.nest()
+                 .key(d=> d.NOC)
+                 .key(d=>d.Year)
+                 .rollup()
+                 .entries(participants)
+
+
+     const gap_plot = new GapPlot(MedalsData, gdp_data, participantsInfo, updateyear, table);
+     gap_plot.drawPlot();
+     });
 //});
 
 

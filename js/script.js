@@ -145,8 +145,18 @@ for (var i = 0; i < btns.length; i++) {
 
    console.log(table);
    // add update year param
-   const gap_plot = new GapPlot(MedalsData, gdp_data, MedalsData, updateyear, table);
+
+   d3.csv('data/athlete_events_modified.csv').then( participants=> {
+    let participantsInfo = d3.nest()
+                  .key(d=> d.NOC)
+                  .key(d=>d.Year)
+                  .rollup()
+                  .entries(participants) 
+
+
+   const gap_plot = new GapPlot(MedalsData, gdp_data, participantsInfo, updateyear, table);
    gap_plot.drawPlot();
+ });
  //});
 
 

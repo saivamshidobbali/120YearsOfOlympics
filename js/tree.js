@@ -10,11 +10,6 @@ class TreeMap {
     let colorScale = d3.scaleOrdinal(d3.schemePaired);
     let that = this;
     
-       //let root = d3.hierarchy(this.MedalsData);  
-
-       //console.log(root.descendants());
-       //console.log(root.links());
-    
     let treemap = d3.treemap()
                     .size([400, 500])
                     .padding(1);
@@ -132,7 +127,6 @@ class TreeMap {
         let year = yearSlider.node().value;
 
         let tag = d3.select('.activeYear-background');
-        tag.text(year);
 
         let sliderLabel = d3.select('.slider-wrap');
         let sliderText = sliderLabel.select('text').text(year);

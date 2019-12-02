@@ -213,7 +213,7 @@ class GapPlot {
             .append('svg');
 
         let sliderText = sliderLabel.append('text').text(this.activeYear);
-        this.updatePlot(1980, "gdp", "medals", "participants");
+        this.updatePlot(2000, "gdp", "medals", "participants");
 
     }
 

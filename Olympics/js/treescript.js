@@ -1,5 +1,14 @@
+var gap = null;
+
+function selectedCountry() {
+  console.log("sdajdjaldjsdadjl", gap)
+  gap.selectedCountry();
+}
+
+
+
 d3.json('data/gdp.json').then( gdp_data=> {
- this.active_year = "1980";
+ this.active_year = "2000";
 
 // Add active class to the current button (highlight it)
 var header = document.getElementById("topnavbar");
@@ -21,27 +30,84 @@ for (var i = 0; i < btns.length; i++) {
                   .rollup()
                   .entries(matchesCSV)
 
-  let gender = {};
-  gender["M"] = 0;
-  gender["F"] = 0;
 
   let genderData = d3.nest()
                   .key(d=>d.Year)
                   .rollup(leaves => {
-                      len= leaves.length;
+                
+                  let gender = {};
+                  gender["M"] = [];
+                  gender["F"] = [];
 
+                      let len= leaves.length;
                       for(var i=0;i<len;i++){
                         g(i);
                       }
-                     
-                      g()
 
-                      gender[leaves[0]['Sex']] +=1; 
+                      function g(i) {
+                        if (gender[leaves[i]['Sex']].indexOf(leaves[i]['Name']) == -1)
+                            gender[leaves[i]['Sex']].push(leaves[i]['Name']); 
+                      }
+      
 
+                 gender["M"] = gender["M"].length;
+                 gender["F"] = gender["F"].length;
+
+                 let obj = {
+                    "values": gender
+                  }
+
+                      return obj;     
                   })
-                  .entries(matchesCSV)
+                  .entries(matchesCSV);
 
-console.log(gender) 
+console.log(genderData) 
+
+let genderData_complete = null
+function  prep_data_for_line() {
+ genderData_complete = d3.nest()
+                  .key(d=>d.Year)
+                  .key(d=>d.NOC)
+                  .rollup(leaves => {
+                
+                  let gender = {};
+                  gender["M"] = [];
+                  gender["F"] = [];
+
+                      let len= leaves.length;
+                      for(var i=0;i<len;i++){
+                        g(i);
+                      }
+
+                      function g(i) {
+                        if (gender[leaves[i]['Sex']].indexOf(leaves[i]['Name']) == -1)
+                            gender[leaves[i]['Sex']].push(leaves[i]['Name']); 
+                      }
+      
+
+                 gender["M"] = gender["M"].length;
+                 gender["F"] = gender["F"].length;
+
+                 let obj = {
+                    "values": gender
+                  }
+
+                      return obj;     
+                  })
+                  .entries(matchesCSV);
+return genderData_complete                  
+
+}
+
+genderData_complete = prep_data_for_line()
+gap = new Gender(genderData, genderData_complete, prep_data_for_line);
+gap.createAreaChart(null);
+console.log(genderData_complete)
+//gender["M"] = gender["M"].length;
+//gender["F"] = gender["F"].length;
+
+
+
 
 
 // ###################################################################################
@@ -157,7 +223,6 @@ console.log(gender)
       tree_map.createTreeMap();
 
   function updateyear(active_year) {
-       console.log("hello", treeData)
        that.active_year = active_year;
        
        prepare_tree_data();

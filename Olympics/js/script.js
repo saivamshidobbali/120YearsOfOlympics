@@ -1,5 +1,5 @@
 d3.json('data/gdp.json').then( gdp_data=> {
- this.active_year = "1980";
+ this.active_year = "2000";
 
 // Add active class to the current button (highlight it)
 var header = document.getElementById("topnavbar");
@@ -163,3 +163,4 @@ for (var i = 0; i < btns.length; i++) {
 });
 
 });
+s

@@ -1,9 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <title>Visualization – Homework 4</title>
+    <style>
+
+      /* style of line charts */
+      .line-chart {
+        stroke: #086fad;
+        stroke-width: 1;
+        fill: none;
+      }
+
+      .line-chart-x {
+        stroke: #c7001e;
+      }
+
+      .line-chart-y {
+        stroke: #086fad;
+      }
+
+    </style>
+
     <link rel="stylesheet" href="styles.css" />
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
@@ -11,6 +29,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.19/topojson.js"></script>
     <script src="https://d3js.org/d3-geo-projection.v2.js"></script>
     <script src="js/tree.js" async></script>
+    <script src="js/gender.js" async></script>
     <script src="js/treescript.js" async></script>
 </head>
 
@@ -32,35 +51,48 @@
 
     <div id="treemap" style="width:900px">
         <h1>Olympic medals distribution</h1>
-
-
     </div>
 
-    <div class="col-sm-2">
-          <br><br>
-          <button type="button" id = "button" onclick="updateCountry()" class="btn btn-primary btn-md">View Political Stability</button>
-          <br><br>
-         <select id="dropdown">
-        <option value="SYR">Syria</option>
-        <option value="JPN">Japan</option>
-        <option value="SGP">Singapore</option>
-        <option value="KOR">South Korea</option>
-        <option value="NZL">New Zealand</option>
-        <option value="NLD">Netherlands</option>
-        <option value="GRB">United Kingdom</option>
-        <option value="DEU">Germany</option>
+    <div class="GENDER">
+
+         <select id="dropdown" onclick="selectedCountry()">
+         <option value="WRD">World</option>
+        <option value="AUS">Australia</option>
+        <option value="CAN">Canada</option>
+        <option value="FRA">France</option>
+        <option value="ITA">Italy</option>
+        <option value="GER">Germany</option>
+        <option value="GBR">United Kingdom</option>
+        <option value="HUN">Hungary</option>
         <option value="USA">United States</option>
         <option value="CHN">China</option>
-        <option value="LBY">Libya</option>
+        <option value="JPN">Japan</option>
         <option value="PRK">North Korea</option>
-        <option value="IRQ">Iraq</option>
+        <option value="RUS">Russia</option>
         <option value="IND">India</option>
         <option value="PAK">Pakistan</option>
-        <option value="YEM">Yemen</option>
-        <option value="AFG">Afghanisthan</option>
-        <option value="SOM">Somalia</option>
+        <option value="QAT">Qatar<option>
+
         </select>
-      
+    
+      <div class = "gendergap">
+        <h2>Line Charts</h2>
+        <svg class="line-chart line-chart-x" width="3000" height="3000">
+          <g >
+            <path
+              id="aLineChart"
+              d="M 0 10 L 1 8 L 2 13 L 3 9 L 4 11 L 5 14 L 6 6 L 7 4 L 8 12 L 9 7 L 10 5"
+            />
+          </g>
+
+          <g >
+            <path class = "line-chart-y"
+              id="bLineChart"
+              d="M 0 8.04 L 0 8.04 L 1 6.95 L 2 7.58 L 3 8.81 L 4 8.33 L 5 9.96 L 6 7.24 L 7 4.26 L 8 10.84 L 9 4.82 L 10 5.68 L 10 5.68"
+            />
+          </g>
+        </svg>
+      </div>
     </div>
 
 </body>

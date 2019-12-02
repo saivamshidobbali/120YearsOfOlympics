@@ -51,11 +51,14 @@ class TreeMap {
                 return colorScale(a[a.length - 2].id); });
         
         rects.on("mouseover", function(d,i) {       
-                     rects.html("<title>" + d.id + "</title>")  
+                     rects.html("<title>" + "Sport: "+ d.id + "\n" +"Country: "+ d.data.parent +"\n" + "Medals Won: "+d.data.medals +"</title>") 
+                     cell.selectAll("rect").style("opacity", "0.5")
+                     d3.select(this).style("opacity", "1") 
                     })                  
                 .on("mouseout", function(d) {       
+                    cell.selectAll("rect").style("opacity", "1")
+                })
 
-                });
 
     let label = cell.append("text")
             .attr("clip-path", d => d.name);
@@ -92,7 +95,7 @@ class TreeMap {
             .style('fill', "white");             
 
         d3.select('#treemap')
-            .append('div').attr('id', 'activeYear-bar');
+            .append('div').attr("class", "rangeslider").attr('id', 'activeYear-bar');
 
         let yearSlider = d3.select('#activeYear-bar')
             .append('div').classed('slider-wrap', true)
@@ -190,9 +193,12 @@ class TreeMap {
                 return colorScale(a[a.length - 2].id); });
         
         rects.on("mouseover", function(d,i) {		
-                     rects.html("<title>" + d.id + "</title>")	
+                     rects.html("<title>" + "Sport: "+ d.id + "\n" +"Country: "+ d.data.parent +"\n" + "Medals Won: "+d.data.medals +"</title>") 
+                     cell.selectAll("rect").style("opacity", "0.5")
+                     d3.select(this).style("opacity", "1") 	
                     })					
                 .on("mouseout", function(d) {		
+                     cell.selectAll("rect").style("opacity", "1")  
 
                 });
 

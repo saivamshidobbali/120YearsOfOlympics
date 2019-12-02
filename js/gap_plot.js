@@ -25,6 +25,8 @@ class GapPlot {
         this.activeYear = 2000;
         this.updateYear = updateYear;
         this.Table = Table;
+
+        this.play_stop = 0;
         
     }
 
@@ -164,8 +166,22 @@ class GapPlot {
                      .attr('class', 'button');    
 
         let that = this;
+        let dummy = []
 
         icon.on('click', function(d) {
+          for (let i = 0; i<dummy.length ;i++) {
+               window.clearTimeout(dummy[i]) 
+          }
+
+          if (dummy.length) {
+                d3.select(this).classed('pause', 'false');
+                d3.select(this).classed('button', 'true');    
+  
+                this.play_stop = 0;
+                dummy = []
+                return;
+          } 
+
           /*
            d3.select(".slider")
              .transition()
@@ -182,21 +198,26 @@ class GapPlot {
 
             let event = new Event('input', {
                 bubbles: true,
-                cancelable: true,
+                cancelable: true,  
             });
+
+
+           d3.select(this).classed('pause', 'true');      
+           d3.select(this).classed('button', 'false');
 
             yearSlider.node().value = 1980;
             yearSlider.node().dispatchEvent(event)
 
-
          let i = 1000;
          for (let elem in year_list) {
             
-            window.setTimeout(()=> { yearSlider.node().value = year_list[elem];
-                                     yearSlider.node().dispatchEvent(event);}, i );
+          dummy.push(window.setTimeout(()=> { yearSlider.node().value = year_list[elem];
+                                     yearSlider.node().dispatchEvent(event);}, i ));
             i = i+2000;
           }
  
+
+
         });
 
         let yearSlider = d3.select('#activeYear-bar')

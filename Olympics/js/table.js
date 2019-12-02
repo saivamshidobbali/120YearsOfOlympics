@@ -24,12 +24,12 @@ this.flag=0;
 
 beforeTable(activeYear){
   let that=this;
-  console.log("entered before");
 //  that.tableHeaders.splice(0, 0, "Team");
  let head = d3.select("thead").select("tr")
  let td = head.selectAll("th,td,td,td")
       .data(that.tableHeaders)
       .on("click",(d)=>{
+        console.log(that.flag);
       if(that.flag==0)  {
 
          console.log("d",d);
@@ -48,6 +48,27 @@ beforeTable(activeYear){
       });
 
 }
+
+selectedCountryTable(country,activeYear) {
+  console.log(country,activeYear);
+  let that=this;
+  if(country!=null){
+    console.log("inside");
+    for(let i=0;i<that.tableElements.length;i++)
+    {
+      console.log(that.tableElements[i],activeYear);
+      if(that.tableElements[i].key==country){
+        //console.log();
+        console.log(that.tableElements[i],activeYear);
+       this.updateList(that.tableElements[i],activeYear);
+      }
+    }
+  }
+  else{
+    this.updateList(that.tableElements ,activeYear);
+  }
+}
+
 
 check(d,activeYear){
             console.log("enter check");
@@ -306,12 +327,14 @@ check2(d,activeYear){
 
 
               }
-
+///////////////////////////////CREATE TABLE
 createTable(activeYear,data){
 let that = this;
+console.log(that.flag);
 if(that.flag==1){
   //that.tableElements=data;
   //that.data=that.tableElements;
+
 }
 else{
 data=that.tableElements;
@@ -323,17 +346,13 @@ console.log("***",data);
 /*
 let new_tableElements=[];
 for(let ele in that.tableElements){
-  console.log("****");
-  console.log("all eles",that.tableElements[ele].values);
   for (let l in that.tableElements[ele].values){
     //console.log(that.tableElements[ele].values[l].key);
     if(that.tableElements[ele].values[l].key == activeYear){
-      console.log(that.tableElements[ele].values[l]);
       //new_tableElements.append();
 
     }
     else{
-      console.log(that.tableElements[ele].values[l].key);
       //delete that.tableElements[ele].values[l].values
     }
 
@@ -354,12 +373,20 @@ let new_tableElements= data.filter(function(d){
     console.log("new",new_tableElements);
 let tablerow = d3.select("tbody").selectAll("tr")
      .data(new_tableElements)
-     .join('tr');
+     .join('tr')
+     .attr("class",function(d,i){
+       if(i!=0 && that.flag==1 ){
+         //var header = d3.select(this);
+         return "subcat";
+       }
+      return;
+     });
 
 //tablerow.text(function(d){
 //return d.key;
 let tablehead = tablerow.selectAll("th")
-                        .data(function (d) {
+                        .data(function (d,i) {
+                          console.log("^^^^^",d);
                           return [d];   })
                         .join("th")
                         .text(function(d,i){
@@ -371,6 +398,9 @@ let tablehead = tablerow.selectAll("th")
 
 let td = tablerow.selectAll("td")
                 .data(function (d, i) {
+                  if(i==0 && that.flag==1){
+
+                  }
                     let list = []
                   //  console.log(d.values);
                    let a = d.values;
@@ -390,7 +420,7 @@ let td = tablerow.selectAll("td")
 
 
                     return list
-                })
+                });
                 td = td.join('td');
 
                 let bars = td.selectAll("svg")
@@ -398,7 +428,7 @@ let td = tablerow.selectAll("td")
                         return [d];
                     }).join('svg')
                     .attr("width", this.cell.width)
-                    .attr("height", this.cell.height);
+                    .attr("height", this.cell.height-20);
 
               let rect = bars.selectAll("rect")
                   .data(function (d) {
@@ -426,6 +456,7 @@ let td = tablerow.selectAll("td")
 }
 
 updateList(i,activeYear) {
+  console.log("IIIIIII",i);
   let that=this;
 if(that.flag==0){
   console.log("pressded table ele",activeYear);
@@ -482,8 +513,6 @@ else{
 }
 
 }
-
-
 
 
 }

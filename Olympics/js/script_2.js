@@ -15,34 +15,47 @@ for (var i = 0; i < btns.length; i++) {
 
 var line = new MultiLine();
 line.line_graph();
-d3.csv('data/athlete_events_modified.csv').then(matchesCSV=>{
-
+d3.csv('data/truncated_latest.csv').then(matchesCSV=>{
 let teamData = d3.nest()
                 .key(d=> d.NOC)
                 .key(d=>d.Year)
                 .rollup(leaves => {
+let total_medals=0;
 
 let country_name = leaves[0]['Team'];
-
+var total_gold=0;
+var total_bronze=0;
+var total_silver=0;
 len= leaves.length;
-        let total_medals = len;
+         for(var i=0;i<len;i++){
+         h(i);
+         }
+         //total_medals+= len;
+         function h(i){
+           if(leaves[i]['Medal']=="Gold" ){
+             total_gold+=1;
+           }
+
+
+           if(leaves[i]['Medal']=="Bronze"){
+              total_bronze+=1;
+           }
+           if(leaves[i]['Medal']=="Silver"){
+             total_silver+=1;
+        }
+         }
+          total_medals += total_gold+total_bronze+total_silver;
+
 
       return total_medals;
     }).entries(matchesCSV);
 
 console.log(teamData);
 
-var keys = Object.keys(teamData);
 
-
-console.log(keys);
-
-for(let ele in keys){
-
-}
    // var line = new MultiLine();
     //line.line();
-/*    "use strict";
+    /*   "use strict";
 exportToJsonFile(teamData);
     function exportToJsonFile(teamData) {
         let dataStr = JSON.stringify(teamData);
@@ -57,6 +70,4 @@ exportToJsonFile(teamData);
     }
 
 */
-
-
 });

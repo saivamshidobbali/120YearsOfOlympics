@@ -1,5 +1,5 @@
 d3.json('data/gdp.json').then( gdp_data=> {
-this.active_year = "1980";
+ this.active_year = "1980";
 
 // Add active class to the current button (highlight it)
 var header = document.getElementById("topnavbar");
@@ -20,22 +20,12 @@ for (var i = 0; i < btns.length; i++) {
   let MedalsData = d3.nest()
                   .key(d=> d.NOC)
                   .key(d=>d.Year)
+                  .rollup()
                   .entries(matchesCSV)
 
- d3.csv('data/athlete_events_modified.csv').then(participantsCSV=>{
 
 
-  let participantsInfo = d3.nest()
-               .key(d=> d.NOC)
-               .key(d=>d.Year)
-               .rollup()
-               .entries(participantsCSV)
-
-
-   const gap_plot = new GapPlot(MedalsData, gdp_data, participantsInfo, updateyear);
-   gap_plot.drawPlot();
-
- })
+// })
 
 
 let teamData = d3.nest()
@@ -72,8 +62,10 @@ len= leaves.length;
                  if(leaves[i]['Medal']=="Gold" ){
                    total_gold+=1;
                  }
+
+
                  if(leaves[i]['Medal']=="Bronze"){
-                   total_bronze+=1;
+                    total_bronze+=1;
                  }
                  if(leaves[i]['Medal']=="Silver"){
                    total_silver+=1;
@@ -128,7 +120,7 @@ len= leaves.length;
 
          }
         // sports["type"]="game";
-         }
+      }//hi
 
 
        let obj = {
@@ -163,19 +155,75 @@ exportToJsonFile(teamData);
          linkElement.click();
      }
      */
-    var table = new Table2(teamData);
-    table.createTable(this.active_year,teamData);
-
-function updateyear(active_year) {
-
-       this.active_year = active_year;
-       table.beforeTable(this.active_year);
-
-       table.createTable(this.active_year,teamData);
-       //table.updateTable(this.active_year);
 
 
-}
+         // var line = new MultiLine();
+          //line.line();
+
+     // ###################################################################################
+
+     var treeData = [];
+     let that = this;
+
+     function prepare_tree_data() {
+                    console.log("%%%%%%%%%5%%%%%%%%%",teamData);
+                     treeData = [];
+                     treeData.push({'name': 'root', 'medals': 0, 'parent': ""});
+
+                     for(let i = 0; i < teamData.length; i++) {
+                        for (let j =0; j<teamData[i]['values'].length; j++) {
+                         if (teamData[i]['values'][j].key == that.active_year) {
+                              // teamData[i]['values'][j]['value']['Total Medals']
+                              treeData.push({'medals': "undefined" ,
+                                             'name': teamData[i]['key'],
+                                             'parent': 'root'});
+
+                             for (let elem in  teamData[i]['values'][j]['value']['Sports']) {
+
+                                   treeData.push( {'name': elem,
+                                                   'medals':teamData[i]['values'][j]['value']['Sports'][elem],
+                                                   'parent': teamData[i].key })
+
+                             }
+
+                             }
+                       }
+     }
+
+       let sum = 0;
+       for(let i=0; i< treeData.length; i++) {
+         sum += parseInt(treeData[i]['medals']);
+       }
+
+       treeData[0]['medals'] = "undefined";
+     }
+
+     prepare_tree_data()
+     const tree_map = new TreeMap(treeData, updateyear);
+     tree_map.createTreeMap();
+
+     let table = new Table2(teamData);
+     table.beforeTable(this.active_year);
+
+     table.createTable(this.active_year);
+
+  console.log(table);
+  // add update year param
+  const gap_plot = new GapPlot(MedalsData, gdp_data, MedalsData, updateyear, table);
+  gap_plot.drawPlot();
+//});
+
+
+  function updateyear(active_year) {
+       that.active_year = active_year;
+
+       prepare_tree_data();
+       tree_map.updateTreeMap(treeData);
+       table.flag=0;
+       table.beforeTable(active_year);
+       table.createTable(active_year,0);
+
+  }
 
 });
 

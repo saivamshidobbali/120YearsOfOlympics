@@ -1,6 +1,6 @@
 # Olympic Data Analysis
 
-Data visualization for 120 years of summer olympics.
+Data visualization of Summer olympics from 1980 to 2016.
 
 Vizualization project (fall 2019)
 Using the data from https://www.kaggle.com/heesoo37/120-years-of-olympic-history-athletes-and-results.

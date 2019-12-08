@@ -1,4 +1,4 @@
-# 120YearsOfOlympics
+# Olympic Data Analysis
 
 Data visualization for 120 years of summer olympics.
 
